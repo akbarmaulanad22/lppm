@@ -12,6 +12,7 @@ type RouteConfig struct {
 	ProfilVisiMisiController *ProfilVisiMisiController
 	ProfilSODTController     *ProfilSODTController
 	PKMRDRPController        *PKMRDRPController
+	HKIMHSController         *HKIMHSController
 }
 
 func (route *RouteConfig) Setup() {
@@ -36,6 +37,13 @@ func (route *RouteConfig) SetupGuestRoute() {
 	pkmRouter.HandleFunc("/rdrp", route.PKMRDRPController.List).Methods("GET")
 	pkmRouter.HandleFunc("/rdrp/{id}", route.PKMRDRPController.Update).Methods("PUT")
 	pkmRouter.HandleFunc("/rdrp/{id}", route.PKMRDRPController.Delete).Methods("DELETE")
+
+	hkiRouter := route.Router.PathPrefix("/hki").Subrouter()
+	hkiRouter.HandleFunc("/mhs", route.HKIMHSController.Create).Methods("POST")
+	hkiRouter.HandleFunc("/mhs", route.HKIMHSController.List).Methods("GET")
+	hkiRouter.HandleFunc("/mhs/{id}", route.HKIMHSController.Update).Methods("PUT")
+	hkiRouter.HandleFunc("/mhs/{id}", route.HKIMHSController.Delete).Methods("DELETE")
+
 }
 
 func (route *RouteConfig) SetupAuthRoute() {

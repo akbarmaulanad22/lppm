@@ -26,22 +26,26 @@ func NewMux(config *MuxConfig) {
 	profilVisiMisiRepository := repository.NewProfilVisiMisiRepository(config.Log)
 	profilSODTRepository := repository.NewProfilSODTRepository(config.Log)
 	pkmRepository := repository.NewPKMRDRPRepository(config.Log)
+	hkiMhsRepository := repository.NewHKIMHSRepository(config.Log)
 
 	// setup use cases
 	profilVisiMisiUseCase := usecase.NewProfilVisiMisiUseCase(config.DB, config.Log, config.Validate, profilVisiMisiRepository)
 	profilSODTUseCase := usecase.NewProfilSODTUseCase(config.DB, config.Log, config.Validate, profilSODTRepository)
 	pkmUseCase := usecase.NewPKMRDRPUseCase(config.DB, config.Log, config.Validate, pkmRepository)
+	hkiMhsUseCase := usecase.NewHKIMHSUseCase(config.DB, config.Log, config.Validate, hkiMhsRepository)
 
 	// setup controller
 	profilVisiMisiController := route.NewProfilVisiMisiController(profilVisiMisiUseCase, config.Log)
 	profilSODTController := route.NewProfilSODTController(profilSODTUseCase, config.Log)
 	PKMRDRPController := route.NewPKMRDRPController(pkmUseCase, config.Log)
+	hkiMhsController := route.NewHKIMHSController(hkiMhsUseCase, config.Log)
 
 	routeConfig := route.RouteConfig{
 		Router:                   config.Router,
 		ProfilVisiMisiController: profilVisiMisiController,
 		ProfilSODTController:     profilSODTController,
 		PKMRDRPController:        PKMRDRPController,
+		HKIMHSController:         hkiMhsController,
 	}
 	routeConfig.Setup()
 
