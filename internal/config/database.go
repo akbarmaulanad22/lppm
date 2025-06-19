@@ -65,4 +65,8 @@ func (l *logrusWriter) Printf(message string, args ...interface{}) {
 	l.Logger.Tracef(message, args...)
 }
 
-// migrate -database "mysql://root@tcp(localhost:3306)/academic" -path db/migrations down
+// untuk menjalankan file migration ubah down jika ingin kembali ke migrasi sebelumnya dan ubah ke up untuk sebaliknya
+// migrate -database "mysql://root@tcp(localhost:3306)/lppm" -path db/migrations down
+
+// untuk membuat file migration
+// migrate create -ext sql -dir db/migrations create_(namatable)_table

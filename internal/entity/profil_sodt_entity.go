@@ -1,11 +1,11 @@
 package entity
 
-type ProfilVisiMisi struct {
+type ProfilSODT struct {
 	Entity
 	Title   string `gorm:"column:title"`
 	Content string `gorm:"column:content"`
 }
 
-func (*ProfilVisiMisi) TableName() string {
-	return "lppm_profil_visi_misi"
+func (*ProfilSODT) TableName() string {
+	return "lppm_profil_sodt"
 }
