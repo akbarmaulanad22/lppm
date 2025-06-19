@@ -51,7 +51,7 @@ func (c *ProfilVisiMisiController) List(w http.ResponseWriter, r *http.Request) 
 
 	responses, err := c.UseCase.FindAll(r.Context())
 	if err != nil {
-		c.Log.WithError(err).Error("error get all pkm rdrp")
+		c.Log.WithError(err).Error("error get all profil visi misi")
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}

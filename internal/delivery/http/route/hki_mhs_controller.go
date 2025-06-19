@@ -11,21 +11,21 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type PKMPDPPController struct {
-	UseCase *usecase.PKMPDPPUseCase
+type HKIMHSController struct {
+	UseCase *usecase.HKIMHSUseCase
 	Log     *logrus.Logger
 }
 
-func NewPKMPDPPController(useCase *usecase.PKMPDPPUseCase, log *logrus.Logger) *PKMPDPPController {
-	return &PKMPDPPController{
+func NewHKIMHSController(useCase *usecase.HKIMHSUseCase, log *logrus.Logger) *HKIMHSController {
+	return &HKIMHSController{
 		UseCase: useCase,
 		Log:     log,
 	}
 }
 
-func (c *PKMPDPPController) Create(w http.ResponseWriter, r *http.Request) {
+func (c *HKIMHSController) Create(w http.ResponseWriter, r *http.Request) {
 
-	request := new(model.CreatePKMPDPPRequest)
+	request := new(model.CreateHKIMHSRequest)
 
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		c.Log.Warnf("Failed to parse request body: %+v", err)
@@ -41,17 +41,17 @@ func (c *PKMPDPPController) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(model.WebResponse[*model.PKMPDPPResponse]{Data: response}); err != nil {
+	if err := json.NewEncoder(w).Encode(model.WebResponse[*model.HKIMHSResponse]{Data: response}); err != nil {
 		c.Log.Warnf("Failed to write response: %+v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
 
-func (c *PKMPDPPController) List(w http.ResponseWriter, r *http.Request) {
+func (c *HKIMHSController) List(w http.ResponseWriter, r *http.Request) {
 
 	responses, err := c.UseCase.FindAll(r.Context())
 	if err != nil {
-		c.Log.WithError(err).Error("error get all PKM PDPP")
+		c.Log.WithError(err).Error("error get all profil visi misi")
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
@@ -64,13 +64,13 @@ func (c *PKMPDPPController) List(w http.ResponseWriter, r *http.Request) {
 	// }
 
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(model.WebResponse[[]model.PKMPDPPResponse]{Data: responses}); err != nil {
+	if err := json.NewEncoder(w).Encode(model.WebResponse[[]model.HKIMHSResponse]{Data: responses}); err != nil {
 		c.Log.Warnf("Failed to write response: %+v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
 
-func (c *PKMPDPPController) Update(w http.ResponseWriter, r *http.Request) {
+func (c *HKIMHSController) Update(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	id := vars["id"]
@@ -81,7 +81,7 @@ func (c *PKMPDPPController) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	request := new(model.UpdatePKMPDPPRequest)
+	request := new(model.UpdateHKIMHSRequest)
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		c.Log.Warnf("Failed to parse request body: %+v", err)
 		http.Error(w, "Bad Request", http.StatusBadRequest)
@@ -97,13 +97,13 @@ func (c *PKMPDPPController) Update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(model.WebResponse[*model.PKMPDPPResponse]{Data: response}); err != nil {
+	if err := json.NewEncoder(w).Encode(model.WebResponse[*model.HKIMHSResponse]{Data: response}); err != nil {
 		c.Log.Warnf("Failed to write response: %+v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
 
-func (c *PKMPDPPController) Delete(w http.ResponseWriter, r *http.Request) {
+func (c *HKIMHSController) Delete(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 	idUint, err := strconv.Atoi(id)
@@ -113,7 +113,7 @@ func (c *PKMPDPPController) Delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	request := &model.DeletePKMPDPPRequest{
+	request := &model.DeleteHKIMHSRequest{
 		ID: uint(idUint),
 	}
 

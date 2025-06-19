@@ -1,11 +1,11 @@
 package entity
 
-type PKMPDPP struct {
+type HKIMHS struct {
 	Entity
 	Title   string `gorm:"column:title"`
 	Content string `gorm:"column:content"`
 }
 
-func (*PKMPDPP) TableName() string {
-	return "lppm_pkm_pdpp"
+func (*HKIMHS) TableName() string {
+	return "lppm_hki_mhs"
 }

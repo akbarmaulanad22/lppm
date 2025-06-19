@@ -5,8 +5,8 @@ import (
 	"tugasakhir/internal/model"
 )
 
-func PKMPDPPToResponse(e *entity.PKMPDPP) *model.PKMPDPPResponse {
-	return &model.PKMPDPPResponse{
+func HKIMHSToResponse(e *entity.HKIMHS) *model.HKIMHSResponse {
+	return &model.HKIMHSResponse{
 		ID:      e.ID,
 		Title:   e.Title,
 		Content: e.Content,

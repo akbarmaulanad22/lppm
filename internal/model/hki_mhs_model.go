@@ -1,6 +1,6 @@
 package model
 
-type PKMPDPPResponse struct {
+type HKIMHSResponse struct {
 	ID      uint   `json:"id"`
 	Title   string `json:"title"`
 	Content string `json:"content"`
@@ -8,17 +8,17 @@ type PKMPDPPResponse struct {
 	// UpdatedAt time.Time `json:"updated_at"`
 }
 
-type CreatePKMPDPPRequest struct {
+type CreateHKIMHSRequest struct {
 	Title   string `json:"title" validate:"required,max=30"`
 	Content string `json:"content" validate:"required"`
 }
 
-type UpdatePKMPDPPRequest struct {
+type UpdateHKIMHSRequest struct {
 	ID      uint   `json:"-"`
 	Title   string `json:"title" validate:"required,max=30"`
 	Content string `json:"content" validate:"required"`
 }
 
-type DeletePKMPDPPRequest struct {
+type DeleteHKIMHSRequest struct {
 	ID uint `json:"-" validate:"required"`
 }

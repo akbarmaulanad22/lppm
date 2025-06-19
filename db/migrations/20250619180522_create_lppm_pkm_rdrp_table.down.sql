@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS lppm_pkm_rdrp_table;
+DROP TABLE IF EXISTS lppm_pkm_rdrp;
