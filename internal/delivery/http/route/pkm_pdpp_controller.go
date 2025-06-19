@@ -11,21 +11,21 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type ProfilVisiMisiController struct {
-	UseCase *usecase.ProfilVisiMisiUseCase
+type PKMPDPPController struct {
+	UseCase *usecase.PKMPDPPUseCase
 	Log     *logrus.Logger
 }
 
-func NewProfilVisiMisiController(useCase *usecase.ProfilVisiMisiUseCase, log *logrus.Logger) *ProfilVisiMisiController {
-	return &ProfilVisiMisiController{
+func NewPKMPDPPController(useCase *usecase.PKMPDPPUseCase, log *logrus.Logger) *PKMPDPPController {
+	return &PKMPDPPController{
 		UseCase: useCase,
 		Log:     log,
 	}
 }
 
-func (c *ProfilVisiMisiController) Create(w http.ResponseWriter, r *http.Request) {
+func (c *PKMPDPPController) Create(w http.ResponseWriter, r *http.Request) {
 
-	request := new(model.CreateProfilVisiMisiRequest)
+	request := new(model.CreatePKMPDPPRequest)
 
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		c.Log.Warnf("Failed to parse request body: %+v", err)
@@ -41,17 +41,17 @@ func (c *ProfilVisiMisiController) Create(w http.ResponseWriter, r *http.Request
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(model.WebResponse[*model.ProfilVisiMisiResponse]{Data: response}); err != nil {
+	if err := json.NewEncoder(w).Encode(model.WebResponse[*model.PKMPDPPResponse]{Data: response}); err != nil {
 		c.Log.Warnf("Failed to write response: %+v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
 
-func (c *ProfilVisiMisiController) List(w http.ResponseWriter, r *http.Request) {
+func (c *PKMPDPPController) List(w http.ResponseWriter, r *http.Request) {
 
 	responses, err := c.UseCase.FindAll(r.Context())
 	if err != nil {
-		c.Log.WithError(err).Error("error get all pkm rdrp")
+		c.Log.WithError(err).Error("error get all PKM PDPP")
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
@@ -64,13 +64,13 @@ func (c *ProfilVisiMisiController) List(w http.ResponseWriter, r *http.Request) 
 	// }
 
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(model.WebResponse[[]model.ProfilVisiMisiResponse]{Data: responses}); err != nil {
+	if err := json.NewEncoder(w).Encode(model.WebResponse[[]model.PKMPDPPResponse]{Data: responses}); err != nil {
 		c.Log.Warnf("Failed to write response: %+v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
 
-func (c *ProfilVisiMisiController) Update(w http.ResponseWriter, r *http.Request) {
+func (c *PKMPDPPController) Update(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	id := vars["id"]
@@ -81,7 +81,7 @@ func (c *ProfilVisiMisiController) Update(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	request := new(model.UpdateProfilVisiMisiRequest)
+	request := new(model.UpdatePKMPDPPRequest)
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		c.Log.Warnf("Failed to parse request body: %+v", err)
 		http.Error(w, "Bad Request", http.StatusBadRequest)
@@ -97,13 +97,13 @@ func (c *ProfilVisiMisiController) Update(w http.ResponseWriter, r *http.Request
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(model.WebResponse[*model.ProfilVisiMisiResponse]{Data: response}); err != nil {
+	if err := json.NewEncoder(w).Encode(model.WebResponse[*model.PKMPDPPResponse]{Data: response}); err != nil {
 		c.Log.Warnf("Failed to write response: %+v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
 
-func (c *ProfilVisiMisiController) Delete(w http.ResponseWriter, r *http.Request) {
+func (c *PKMPDPPController) Delete(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 	idUint, err := strconv.Atoi(id)
@@ -113,7 +113,7 @@ func (c *ProfilVisiMisiController) Delete(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	request := &model.DeleteProfilVisiMisiRequest{
+	request := &model.DeletePKMPDPPRequest{
 		ID: uint(idUint),
 	}
 

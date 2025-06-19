@@ -23,34 +23,25 @@ type MuxConfig struct {
 func NewMux(config *MuxConfig) {
 
 	// setup repositories
-<<<<<<< HEAD
 	profilRepository := repository.NewProfilVisiMisiRepository(config.Log)
-	pkmRepository := repository.NewPKMRDRPRepository(config.Log)
+	pkmrdrpRepository := repository.NewPKMRDRPRepository(config.Log)
+	pkmpdppRepository := repository.NewPKMPDPPRepository(config.Log)
 
 	// setup use cases
 	profilUseCase := usecase.NewProfilVisiMisiUseCase(config.DB, config.Log, config.Validate, profilRepository)
-	pkmUseCase := usecase.NewPKMRDRPUseCase(config.DB, config.Log, config.Validate, pkmRepository)
+	pkmrdrpUseCase := usecase.NewPKMRDRPUseCase(config.DB, config.Log, config.Validate, pkmrdrpRepository)
+	pkmpdppUseCase := usecase.NewPKMPDPPUseCase(config.DB, config.Log, config.Validate, pkmpdppRepository)
 
 	// setup controller
 	profilVisiMisiController := route.NewProfilVisiMisiController(profilUseCase, config.Log)
-	PKMRDRPController := route.NewPKMRDRPController(pkmUseCase, config.Log)
-=======
-	userRepository := repository.NewProfilVisiMisiRepository(config.Log)
-
-	// setup use cases
-	userUseCase := usecase.NewProfilVisiMisiUseCase(config.DB, config.Log, config.Validate, userRepository)
-
-	// setup controller
-	profilVisiMisiController := route.NewProfilVisiMisiController(userUseCase, config.Log)
->>>>>>> 006ad76c5e76579d26dc36a60676ed24113c225b
+	PKMRDRPController := route.NewPKMRDRPController(pkmrdrpUseCase, config.Log)
+	PKMPDPPController := route.NewPKMPDPPController(pkmpdppUseCase, config.Log)
 
 	routeConfig := route.RouteConfig{
 		Router:                   config.Router,
 		ProfilVisiMisiController: profilVisiMisiController,
-<<<<<<< HEAD
 		PKMRDRPController: PKMRDRPController,
-=======
->>>>>>> 006ad76c5e76579d26dc36a60676ed24113c225b
+		PKMPDPPController: PKMPDPPController,
 	}
 	routeConfig.Setup()
 
