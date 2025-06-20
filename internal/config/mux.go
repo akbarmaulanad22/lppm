@@ -31,6 +31,7 @@ func NewMux(config *MuxConfig) {
 	pkmSkrRepository := repository.NewPKMSKRRepository(config.Log)
 	pkmHppRepository := repository.NewPKMHPPRepository(config.Log)
 	pkmStpRepository := repository.NewPKMSTPRepository(config.Log)
+	pkmBadmeRepository := repository.NewPKMBADMERepository(config.Log)
 	hkiMhsRepository := repository.NewHKIMHSRepository(config.Log)
 	hkiDosenRepository := repository.NewHKIDosenRepository(config.Log)
 	penelitianRDRPRepository := repository.NewPenelitianRDRPRepository(config.Log)
@@ -45,6 +46,7 @@ func NewMux(config *MuxConfig) {
 	pkmSkrUseCase := usecase.NewPKMSKRUseCase(config.DB, config.Log, config.Validate, pkmSkrRepository)
 	pkmHppUseCase := usecase.NewPKMHPPUseCase(config.DB, config.Log, config.Validate, pkmHppRepository)
 	pkmStpUseCase := usecase.NewPKMSTPUseCase(config.DB, config.Log, config.Validate, pkmStpRepository)
+	pkmBadmeUseCase := usecase.NewPKMBADMEUseCase(config.DB, config.Log, config.Validate, pkmBadmeRepository)
 	hkiMhsUseCase := usecase.NewHKIMHSUseCase(config.DB, config.Log, config.Validate, hkiMhsRepository)
 	hkiDosenUseCase := usecase.NewHKIDosenUseCase(config.DB, config.Log, config.Validate, hkiDosenRepository)
 	penelitianRDRPUseCase := usecase.NewPenelitianRDRPUseCase(config.DB, config.Log, config.Validate, penelitianRDRPRepository)
@@ -59,6 +61,7 @@ func NewMux(config *MuxConfig) {
 	PKMSKRController := route.NewPKMSKRController(pkmSkrUseCase, config.Log)
 	PKMHPPController := route.NewPKMHPPController(pkmHppUseCase, config.Log)
 	PKMSTPController := route.NewPKMSTPController(pkmStpUseCase, config.Log)
+	PKMBADMEController := route.NewPKMBADMEController(pkmBadmeUseCase, config.Log)
 	hkiMhsController := route.NewHKIMHSController(hkiMhsUseCase, config.Log)
 	hkiDosenController := route.NewHKIDosenController(hkiDosenUseCase, config.Log)
 	penelitianRDRPController := route.NewPenelitianRDRPController(penelitianRDRPUseCase, config.Log)
@@ -74,6 +77,7 @@ func NewMux(config *MuxConfig) {
 		PKMSKRController:         PKMSKRController,
 		PKMHPPController:         PKMHPPController,
 		PKMSTPController:         PKMSTPController,
+		PKMBADMEController:         PKMBADMEController,
 		HKIMHSController:         hkiMhsController,
 		HKIDosenController:       hkiDosenController,
 		PenelitianRDRPController: penelitianRDRPController,
