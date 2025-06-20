@@ -36,6 +36,7 @@ func NewMux(config *MuxConfig) {
 	hkiDosenRepository := repository.NewHKIDosenRepository(config.Log)
 	penelitianRDRPRepository := repository.NewPenelitianRDRPRepository(config.Log)
 	penelitianPDPPRepository := repository.NewPenelitianPDPPRepository(config.Log)
+	penelitianTCRRepository := repository.NewPenelitianTCRRepository(config.Log)
 
 	// setup use cases
 	profilVisiMisiUseCase := usecase.NewProfilVisiMisiUseCase(config.DB, config.Log, config.Validate, profilVisiMisiRepository)
@@ -51,6 +52,7 @@ func NewMux(config *MuxConfig) {
 	hkiDosenUseCase := usecase.NewHKIDosenUseCase(config.DB, config.Log, config.Validate, hkiDosenRepository)
 	penelitianRDRPUseCase := usecase.NewPenelitianRDRPUseCase(config.DB, config.Log, config.Validate, penelitianRDRPRepository)
 	penelitianPDPPUseCase := usecase.NewPenelitianPDPPUseCase(config.DB, config.Log, config.Validate, penelitianPDPPRepository)
+	penelitianTCRUseCase := usecase.NewPenelitianTCRUseCase(config.DB, config.Log, config.Validate, penelitianTCRRepository)
 
 	// setup controller
 	profilVisiMisiController := route.NewProfilVisiMisiController(profilVisiMisiUseCase, config.Log)
@@ -66,6 +68,7 @@ func NewMux(config *MuxConfig) {
 	hkiDosenController := route.NewHKIDosenController(hkiDosenUseCase, config.Log)
 	penelitianRDRPController := route.NewPenelitianRDRPController(penelitianRDRPUseCase, config.Log)
 	penelitianPDPPController := route.NewPenelitianPDPPController(penelitianPDPPUseCase, config.Log)
+	penelitianTCRController := route.NewPenelitianTCRController(penelitianTCRUseCase, config.Log)
 
 	routeConfig := route.RouteConfig{
 		Router:                   config.Router,
@@ -77,11 +80,12 @@ func NewMux(config *MuxConfig) {
 		PKMSKRController:         PKMSKRController,
 		PKMHPPController:         PKMHPPController,
 		PKMSTPController:         PKMSTPController,
-		PKMBADMEController:         PKMBADMEController,
+		PKMBADMEController:       PKMBADMEController,
 		HKIMHSController:         hkiMhsController,
 		HKIDosenController:       hkiDosenController,
 		PenelitianRDRPController: penelitianRDRPController,
 		PenelitianPDPPController: penelitianPDPPController,
+		PenelitianTCRController:  penelitianTCRController,
 	}
 	routeConfig.Setup()
 

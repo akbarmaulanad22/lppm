@@ -13,15 +13,16 @@ type RouteConfig struct {
 	ProfilSODTController     *ProfilSODTController
 	PKMRDRPController        *PKMRDRPController
 	PKMPDPPController        *PKMPDPPController
-	PKMTCRController        *PKMTCRController
-	PKMSKRController        *PKMSKRController
-	PKMHPPController        *PKMHPPController
-	PKMSTPController        *PKMSTPController
-	PKMBADMEController        *PKMBADMEController
+	PKMTCRController         *PKMTCRController
+	PKMSKRController         *PKMSKRController
+	PKMHPPController         *PKMHPPController
+	PKMSTPController         *PKMSTPController
+	PKMBADMEController       *PKMBADMEController
 	HKIMHSController         *HKIMHSController
 	HKIDosenController       *HKIDosenController
 	PenelitianRDRPController *PenelitianRDRPController
 	PenelitianPDPPController *PenelitianPDPPController
+	PenelitianTCRController  *PenelitianTCRController
 }
 
 func (route *RouteConfig) Setup() {
@@ -98,6 +99,12 @@ func (route *RouteConfig) SetupGuestRoute() {
 	penelitianRouter.HandleFunc("/pdpp", route.PenelitianPDPPController.List).Methods("GET")
 	penelitianRouter.HandleFunc("/pdpp/{id}", route.PenelitianPDPPController.Update).Methods("PUT")
 	penelitianRouter.HandleFunc("/pdpp/{id}", route.PenelitianPDPPController.Delete).Methods("DELETE")
+
+	penelitianRouter.HandleFunc("/tcr", route.PenelitianTCRController.Create).Methods("POST")
+	penelitianRouter.HandleFunc("/tcr", route.PenelitianTCRController.List).Methods("GET")
+	penelitianRouter.HandleFunc("/tcr/{id}", route.PenelitianTCRController.Update).Methods("PUT")
+	penelitianRouter.HandleFunc("/tcr/{id}", route.PenelitianTCRController.Delete).Methods("DELETE")
+
 }
 
 func (route *RouteConfig) SetupAuthRoute() {
