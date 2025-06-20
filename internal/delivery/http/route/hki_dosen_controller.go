@@ -11,21 +11,21 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type HKIMHSController struct {
-	UseCase *usecase.HKIMHSUseCase
+type HKIDosenController struct {
+	UseCase *usecase.HKIDosenUseCase
 	Log     *logrus.Logger
 }
 
-func NewHKIMHSController(useCase *usecase.HKIMHSUseCase, log *logrus.Logger) *HKIMHSController {
-	return &HKIMHSController{
+func NewHKIDosenController(useCase *usecase.HKIDosenUseCase, log *logrus.Logger) *HKIDosenController {
+	return &HKIDosenController{
 		UseCase: useCase,
 		Log:     log,
 	}
 }
 
-func (c *HKIMHSController) Create(w http.ResponseWriter, r *http.Request) {
+func (c *HKIDosenController) Create(w http.ResponseWriter, r *http.Request) {
 
-	request := new(model.CreateHKIMHSRequest)
+	request := new(model.CreateHKIDosenRequest)
 
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		c.Log.Warnf("Failed to parse request body: %+v", err)
@@ -41,17 +41,17 @@ func (c *HKIMHSController) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(model.WebResponse[*model.HKIMHSResponse]{Data: response}); err != nil {
+	if err := json.NewEncoder(w).Encode(model.WebResponse[*model.HKIDosenResponse]{Data: response}); err != nil {
 		c.Log.Warnf("Failed to write response: %+v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
 
-func (c *HKIMHSController) List(w http.ResponseWriter, r *http.Request) {
+func (c *HKIDosenController) List(w http.ResponseWriter, r *http.Request) {
 
 	responses, err := c.UseCase.FindAll(r.Context())
 	if err != nil {
-		c.Log.WithError(err).Error("error get all hki mahasiswa")
+		c.Log.WithError(err).Error("error get all hki dosen")
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
@@ -64,13 +64,13 @@ func (c *HKIMHSController) List(w http.ResponseWriter, r *http.Request) {
 	// }
 
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(model.WebResponse[[]model.HKIMHSResponse]{Data: responses}); err != nil {
+	if err := json.NewEncoder(w).Encode(model.WebResponse[[]model.HKIDosenResponse]{Data: responses}); err != nil {
 		c.Log.Warnf("Failed to write response: %+v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
 
-func (c *HKIMHSController) Update(w http.ResponseWriter, r *http.Request) {
+func (c *HKIDosenController) Update(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	id := vars["id"]
@@ -81,7 +81,7 @@ func (c *HKIMHSController) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	request := new(model.UpdateHKIMHSRequest)
+	request := new(model.UpdateHKIDosenRequest)
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		c.Log.Warnf("Failed to parse request body: %+v", err)
 		http.Error(w, "Bad Request", http.StatusBadRequest)
@@ -97,13 +97,13 @@ func (c *HKIMHSController) Update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(model.WebResponse[*model.HKIMHSResponse]{Data: response}); err != nil {
+	if err := json.NewEncoder(w).Encode(model.WebResponse[*model.HKIDosenResponse]{Data: response}); err != nil {
 		c.Log.Warnf("Failed to write response: %+v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
 
-func (c *HKIMHSController) Delete(w http.ResponseWriter, r *http.Request) {
+func (c *HKIDosenController) Delete(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 	idUint, err := strconv.Atoi(id)
@@ -113,12 +113,12 @@ func (c *HKIMHSController) Delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	request := &model.DeleteHKIMHSRequest{
+	request := &model.DeleteHKIDosenRequest{
 		ID: uint(idUint),
 	}
 
 	if err := c.UseCase.Delete(r.Context(), request); err != nil {
-		c.Log.WithError(err).Error("error deleting hki mahasiswa")
+		c.Log.WithError(err).Error("error deleting hki dosen")
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}

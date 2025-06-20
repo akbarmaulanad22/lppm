@@ -48,7 +48,7 @@ func (c *HKIMHSUseCase) Create(ctx context.Context, request *model.CreateHKIMHSR
 	}
 
 	if err := c.HKIMHSRepository.Create(tx, HKIMHS); err != nil {
-		c.Log.WithError(err).Error("failed to create profil Visi Misi")
+		c.Log.WithError(err).Error("failed to create HKI Mahasiswa")
 		return nil, err
 	}
 
@@ -66,12 +66,12 @@ func (c *HKIMHSUseCase) FindAll(ctx context.Context) ([]model.HKIMHSResponse, er
 
 	HKIMHS, err := c.HKIMHSRepository.FindAll(tx)
 	if err != nil {
-		c.Log.WithError(err).Error("error getting profil Visi Misi")
+		c.Log.WithError(err).Error("error getting HKI Mahasiswa")
 		return nil, err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error getting profil Visi Misi")
+		c.Log.WithError(err).Error("error getting HKI Mahasiswa")
 		return nil, err
 	}
 
@@ -89,7 +89,7 @@ func (c *HKIMHSUseCase) Update(ctx context.Context, request *model.UpdateHKIMHSR
 
 	HKIMHS := new(entity.HKIMHS)
 	if err := c.HKIMHSRepository.FindById(tx, HKIMHS, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting profil Visi Misi")
+		c.Log.WithError(err).Error("error getting HKI Mahasiswa")
 		return nil, err
 	}
 
@@ -102,12 +102,12 @@ func (c *HKIMHSUseCase) Update(ctx context.Context, request *model.UpdateHKIMHSR
 	HKIMHS.Content = request.Content
 
 	if err := c.HKIMHSRepository.Update(tx, HKIMHS); err != nil {
-		c.Log.WithError(err).Error("error updating profil Visi Misi")
+		c.Log.WithError(err).Error("error updating HKI Mahasiswa")
 		return nil, err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error updating profil Visi Misi")
+		c.Log.WithError(err).Error("error updating HKI Mahasiswa")
 		return nil, err
 	}
 
