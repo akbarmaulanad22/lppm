@@ -25,6 +25,7 @@ func NewMux(config *MuxConfig) {
 	// setup repositories
 	profilVisiMisiRepository := repository.NewProfilVisiMisiRepository(config.Log)
 	profilSODTRepository := repository.NewProfilSODTRepository(config.Log)
+
 	pkmRdrpRepository := repository.NewPKMRDRPRepository(config.Log)
 	pkmPdppRepository := repository.NewPKMPDPPRepository(config.Log)
 	pkmTcrRepository := repository.NewPKMTCRRepository(config.Log)
@@ -33,15 +34,23 @@ func NewMux(config *MuxConfig) {
 	pkmStpRepository := repository.NewPKMSTPRepository(config.Log)
 	pkmBadmeRepository := repository.NewPKMBADMERepository(config.Log)
 	pkmLpRepository := repository.NewPKMLPRepository(config.Log)
+
 	hkiMhsRepository := repository.NewHKIMHSRepository(config.Log)
 	hkiDosenRepository := repository.NewHKIDosenRepository(config.Log)
-	penelitianRDRPRepository := repository.NewPenelitianRDRPRepository(config.Log)
-	penelitianPDPPRepository := repository.NewPenelitianPDPPRepository(config.Log)
-	penelitianTCRRepository := repository.NewPenelitianTCRRepository(config.Log)
+
+	penelitianRdrpRepository := repository.NewPenelitianRDRPRepository(config.Log)
+	penelitianPdppRepository := repository.NewPenelitianPDPPRepository(config.Log)
+	penelitianTcrRepository := repository.NewPenelitianTCRRepository(config.Log)
+	penelitianSkrRepository := repository.NewPenelitianSKRRepository(config.Log)
+	penelitianHppRepository := repository.NewPenelitianHPPRepository(config.Log)
+	penelitianStpRepository := repository.NewPenelitianSTPRepository(config.Log)
+	penelitianBadmeRepository := repository.NewPenelitianBADMERepository(config.Log)
+	penelitianLpRepository := repository.NewPenelitianLPRepository(config.Log)
 
 	// setup use cases
 	profilVisiMisiUseCase := usecase.NewProfilVisiMisiUseCase(config.DB, config.Log, config.Validate, profilVisiMisiRepository)
 	profilSODTUseCase := usecase.NewProfilSODTUseCase(config.DB, config.Log, config.Validate, profilSODTRepository)
+
 	pkmRdrpUseCase := usecase.NewPKMRDRPUseCase(config.DB, config.Log, config.Validate, pkmRdrpRepository)
 	pkmPdppUseCase := usecase.NewPKMPDPPUseCase(config.DB, config.Log, config.Validate, pkmPdppRepository)
 	pkmTcrUseCase := usecase.NewPKMTCRUseCase(config.DB, config.Log, config.Validate, pkmTcrRepository)
@@ -50,15 +59,23 @@ func NewMux(config *MuxConfig) {
 	pkmStpUseCase := usecase.NewPKMSTPUseCase(config.DB, config.Log, config.Validate, pkmStpRepository)
 	pkmBadmeUseCase := usecase.NewPKMBADMEUseCase(config.DB, config.Log, config.Validate, pkmBadmeRepository)
 	pkmLpUseCase := usecase.NewPKMLPUseCase(config.DB, config.Log, config.Validate, pkmLpRepository)
+
 	hkiMhsUseCase := usecase.NewHKIMHSUseCase(config.DB, config.Log, config.Validate, hkiMhsRepository)
 	hkiDosenUseCase := usecase.NewHKIDosenUseCase(config.DB, config.Log, config.Validate, hkiDosenRepository)
-	penelitianRDRPUseCase := usecase.NewPenelitianRDRPUseCase(config.DB, config.Log, config.Validate, penelitianRDRPRepository)
-	penelitianPDPPUseCase := usecase.NewPenelitianPDPPUseCase(config.DB, config.Log, config.Validate, penelitianPDPPRepository)
-	penelitianTCRUseCase := usecase.NewPenelitianTCRUseCase(config.DB, config.Log, config.Validate, penelitianTCRRepository)
+
+	penelitianRdrpUseCase := usecase.NewPenelitianRDRPUseCase(config.DB, config.Log, config.Validate, penelitianRdrpRepository)
+	penelitianPdppUseCase := usecase.NewPenelitianPDPPUseCase(config.DB, config.Log, config.Validate, penelitianPdppRepository)
+	penelitianTcrUseCase := usecase.NewPenelitianTCRUseCase(config.DB, config.Log, config.Validate, penelitianTcrRepository)
+	penelitianSkrUseCase := usecase.NewPenelitianSKRUseCase(config.DB, config.Log, config.Validate, penelitianSkrRepository)
+	penelitianHppUseCase := usecase.NewPenelitianHPPUseCase(config.DB, config.Log, config.Validate, penelitianHppRepository)
+	penelitianStpUseCase := usecase.NewPenelitianSTPUseCase(config.DB, config.Log, config.Validate, penelitianStpRepository)
+	penelitianBadmeUseCase := usecase.NewPenelitianBADMEUseCase(config.DB, config.Log, config.Validate, penelitianBadmeRepository)
+	penelitianLpUseCase := usecase.NewPenelitianLPUseCase(config.DB, config.Log, config.Validate, penelitianLpRepository)
 
 	// setup controller
 	profilVisiMisiController := route.NewProfilVisiMisiController(profilVisiMisiUseCase, config.Log)
 	profilSODTController := route.NewProfilSODTController(profilSODTUseCase, config.Log)
+
 	PKMRDRPController := route.NewPKMRDRPController(pkmRdrpUseCase, config.Log)
 	PKMPDPPController := route.NewPKMPDPPController(pkmPdppUseCase, config.Log)
 	PKMTCRController := route.NewPKMTCRController(pkmTcrUseCase, config.Log)
@@ -67,29 +84,41 @@ func NewMux(config *MuxConfig) {
 	PKMSTPController := route.NewPKMSTPController(pkmStpUseCase, config.Log)
 	PKMBADMEController := route.NewPKMBADMEController(pkmBadmeUseCase, config.Log)
 	PKMLPController := route.NewPKMLPController(pkmLpUseCase, config.Log)
+
 	hkiMhsController := route.NewHKIMHSController(hkiMhsUseCase, config.Log)
 	hkiDosenController := route.NewHKIDosenController(hkiDosenUseCase, config.Log)
-	penelitianRDRPController := route.NewPenelitianRDRPController(penelitianRDRPUseCase, config.Log)
-	penelitianPDPPController := route.NewPenelitianPDPPController(penelitianPDPPUseCase, config.Log)
-	penelitianTCRController := route.NewPenelitianTCRController(penelitianTCRUseCase, config.Log)
+
+	penelitianRDRPController := route.NewPenelitianRDRPController(penelitianRdrpUseCase, config.Log)
+	penelitianPDPPController := route.NewPenelitianPDPPController(penelitianPdppUseCase, config.Log)
+	penelitianTCRController := route.NewPenelitianTCRController(penelitianTcrUseCase, config.Log)
+	penelitianSKRController := route.NewPenelitianSKRController(penelitianSkrUseCase, config.Log)
+	penelitianHPPController := route.NewPenelitianHPPController(penelitianHppUseCase, config.Log)
+	penelitianSTPController := route.NewPenelitianSTPController(penelitianStpUseCase, config.Log)
+	penelitianBADMEController := route.NewPenelitianBADMEController(penelitianBadmeUseCase, config.Log)
+	penelitianLPController := route.NewPenelitianLPController(penelitianLpUseCase, config.Log)
 
 	routeConfig := route.RouteConfig{
-		Router:                   config.Router,
-		ProfilVisiMisiController: profilVisiMisiController,
-		ProfilSODTController:     profilSODTController,
-		PKMRDRPController:        PKMRDRPController,
-		PKMPDPPController:        PKMPDPPController,
-		PKMTCRController:         PKMTCRController,
-		PKMSKRController:         PKMSKRController,
-		PKMHPPController:         PKMHPPController,
-		PKMSTPController:         PKMSTPController,
-		PKMBADMEController:       PKMBADMEController,
-		PKMLPController:          PKMLPController,
-		HKIMHSController:         hkiMhsController,
-		HKIDosenController:       hkiDosenController,
-		PenelitianRDRPController: penelitianRDRPController,
-		PenelitianPDPPController: penelitianPDPPController,
-		PenelitianTCRController:  penelitianTCRController,
+		Router:                    config.Router,
+		ProfilVisiMisiController:  profilVisiMisiController,
+		ProfilSODTController:      profilSODTController,
+		PKMRDRPController:         PKMRDRPController,
+		PKMPDPPController:         PKMPDPPController,
+		PKMTCRController:          PKMTCRController,
+		PKMSKRController:          PKMSKRController,
+		PKMHPPController:          PKMHPPController,
+		PKMSTPController:          PKMSTPController,
+		PKMBADMEController:        PKMBADMEController,
+		PKMLPController:           PKMLPController,
+		HKIMHSController:          hkiMhsController,
+		HKIDosenController:        hkiDosenController,
+		PenelitianRDRPController:  penelitianRDRPController,
+		PenelitianPDPPController:  penelitianPDPPController,
+		PenelitianTCRController:   penelitianTCRController,
+		PenelitianSKRController:   penelitianSKRController,
+		PenelitianHPPController:   penelitianHPPController,
+		PenelitianSTPController:   penelitianSTPController,
+		PenelitianBADMEController: penelitianBADMEController,
+		PenelitianLPController:    penelitianLPController,
 	}
 	routeConfig.Setup()
 

@@ -13,15 +13,13 @@ type PenelitianRDRPRepository struct {
 }
 
 func NewPenelitianRDRPRepository(log *logrus.Logger) *PenelitianRDRPRepository {
-
 	return &PenelitianRDRPRepository{Log: log}
-
 }
 
 func (r *PenelitianRDRPRepository) FindAll(tx *gorm.DB) ([]entity.PenelitianRDRP, error) {
-	var PenelitianRDRP []entity.PenelitianRDRP
-	if err := tx.Find(&PenelitianRDRP).Error; err != nil {
+	var result []entity.PenelitianRDRP
+	if err := tx.Find(&result).Error; err != nil {
 		return nil, err
 	}
-	return PenelitianRDRP, nil
+	return result, nil
 }

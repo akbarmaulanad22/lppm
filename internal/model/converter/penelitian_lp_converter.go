@@ -5,8 +5,8 @@ import (
 	"tugasakhir/internal/model"
 )
 
-func PenelitianTCRToResponse(e *entity.PenelitianTCR) *model.PenelitianTCRResponse {
-	return &model.PenelitianTCRResponse{
+func PenelitianLPToResponse(e *entity.PenelitianLP) *model.PenelitianLPResponse {
+	return &model.PenelitianLPResponse{
 		ID:      e.ID,
 		Title:   e.Title,
 		Content: e.Content,

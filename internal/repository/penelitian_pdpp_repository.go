@@ -13,15 +13,13 @@ type PenelitianPDPPRepository struct {
 }
 
 func NewPenelitianPDPPRepository(log *logrus.Logger) *PenelitianPDPPRepository {
-
 	return &PenelitianPDPPRepository{Log: log}
-
 }
 
 func (r *PenelitianPDPPRepository) FindAll(tx *gorm.DB) ([]entity.PenelitianPDPP, error) {
-	var PenelitianPDPP []entity.PenelitianPDPP
-	if err := tx.Find(&PenelitianPDPP).Error; err != nil {
+	var result []entity.PenelitianPDPP
+	if err := tx.Find(&result).Error; err != nil {
 		return nil, err
 	}
-	return PenelitianPDPP, nil
+	return result, nil
 }

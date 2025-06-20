@@ -10,7 +10,5 @@ func PenelitianPDPPToResponse(e *entity.PenelitianPDPP) *model.PenelitianPDPPRes
 		ID:      e.ID,
 		Title:   e.Title,
 		Content: e.Content,
-		// CreatedAt: e.CreatedAt,
-		// UpdatedAt: e.UpdatedAt,
 	}
 }

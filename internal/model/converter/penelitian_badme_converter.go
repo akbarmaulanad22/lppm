@@ -5,10 +5,10 @@ import (
 	"tugasakhir/internal/model"
 )
 
-func PenelitianTCRToResponse(e *entity.PenelitianTCR) *model.PenelitianTCRResponse {
-	return &model.PenelitianTCRResponse{
+func PenelitianBADMEToResponse(e *entity.PenelitianBADME) *model.PenelitianBADMEResponse {
+	return &model.PenelitianBADMEResponse{
 		ID:      e.ID,
 		Title:   e.Title,
 		Content: e.Content,
 	}
-}
+} 

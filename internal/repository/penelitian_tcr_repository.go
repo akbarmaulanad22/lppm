@@ -13,15 +13,13 @@ type PenelitianTCRRepository struct {
 }
 
 func NewPenelitianTCRRepository(log *logrus.Logger) *PenelitianTCRRepository {
-
 	return &PenelitianTCRRepository{Log: log}
-
 }
 
 func (r *PenelitianTCRRepository) FindAll(tx *gorm.DB) ([]entity.PenelitianTCR, error) {
-	var PenelitianTCR []entity.PenelitianTCR
-	if err := tx.Find(&PenelitianTCR).Error; err != nil {
+	var result []entity.PenelitianTCR
+	if err := tx.Find(&result).Error; err != nil {
 		return nil, err
 	}
-	return PenelitianTCR, nil
+	return result, nil
 }

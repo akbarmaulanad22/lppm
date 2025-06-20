@@ -19,12 +19,7 @@ type PenelitianRDRPUseCase struct {
 	PenelitianRDRPRepository *repository.PenelitianRDRPRepository
 }
 
-func NewPenelitianRDRPUseCase(
-	db *gorm.DB,
-	logger *logrus.Logger,
-	validate *validator.Validate,
-	PenelitianRDRPRepository *repository.PenelitianRDRPRepository,
-) *PenelitianRDRPUseCase {
+func NewPenelitianRDRPUseCase(db *gorm.DB, logger *logrus.Logger, validate *validator.Validate, PenelitianRDRPRepository *repository.PenelitianRDRPRepository) *PenelitianRDRPUseCase {
 	return &PenelitianRDRPUseCase{
 		DB:                       db,
 		Log:                      logger,
@@ -42,13 +37,13 @@ func (c *PenelitianRDRPUseCase) Create(ctx context.Context, request *model.Creat
 		return nil, err
 	}
 
-	PenelitianRDRP := &entity.PenelitianRDRP{
+	data := &entity.PenelitianRDRP{
 		Title:   request.Title,
 		Content: request.Content,
 	}
 
-	if err := c.PenelitianRDRPRepository.Create(tx, PenelitianRDRP); err != nil {
-		c.Log.WithError(err).Error("failed to create penelitian rdrp")
+	if err := c.PenelitianRDRPRepository.Create(tx, data); err != nil {
+		c.Log.WithError(err).Error("failed to create PenelitianRDRP")
 		return nil, err
 	}
 
@@ -57,27 +52,27 @@ func (c *PenelitianRDRPUseCase) Create(ctx context.Context, request *model.Creat
 		return nil, err
 	}
 
-	return converter.PenelitianRDRPToResponse(PenelitianRDRP), nil
+	return converter.PenelitianRDRPToResponse(data), nil
 }
 
 func (c *PenelitianRDRPUseCase) FindAll(ctx context.Context) ([]model.PenelitianRDRPResponse, error) {
 	tx := c.DB.WithContext(ctx).Begin()
 	defer tx.Rollback()
 
-	PenelitianRDRP, err := c.PenelitianRDRPRepository.FindAll(tx)
+	result, err := c.PenelitianRDRPRepository.FindAll(tx)
 	if err != nil {
-		c.Log.WithError(err).Error("error getting penelitian rdrp")
+		c.Log.WithError(err).Error("error getting PenelitianRDRP")
 		return nil, err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error getting penelitian rdrp")
+		c.Log.WithError(err).Error("error getting PenelitianRDRP")
 		return nil, err
 	}
 
-	responses := make([]model.PenelitianRDRPResponse, len(PenelitianRDRP))
-	for i, penelitianRdrp := range PenelitianRDRP {
-		responses[i] = *converter.PenelitianRDRPToResponse(&penelitianRdrp)
+	responses := make([]model.PenelitianRDRPResponse, len(result))
+	for i, v := range result {
+		responses[i] = *converter.PenelitianRDRPToResponse(&v)
 	}
 
 	return responses, nil
@@ -87,9 +82,9 @@ func (c *PenelitianRDRPUseCase) Update(ctx context.Context, request *model.Updat
 	tx := c.DB.WithContext(ctx).Begin()
 	defer tx.Rollback()
 
-	PenelitianRDRP := new(entity.PenelitianRDRP)
-	if err := c.PenelitianRDRPRepository.FindById(tx, PenelitianRDRP, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting penelitian rdrp")
+	data := new(entity.PenelitianRDRP)
+	if err := c.PenelitianRDRPRepository.FindById(tx, data, request.ID); err != nil {
+		c.Log.WithError(err).Error("error getting PenelitianRDRP")
 		return nil, err
 	}
 
@@ -98,20 +93,20 @@ func (c *PenelitianRDRPUseCase) Update(ctx context.Context, request *model.Updat
 		return nil, err
 	}
 
-	PenelitianRDRP.Title = request.Title
-	PenelitianRDRP.Content = request.Content
+	data.Title = request.Title
+	data.Content = request.Content
 
-	if err := c.PenelitianRDRPRepository.Update(tx, PenelitianRDRP); err != nil {
-		c.Log.WithError(err).Error("error updating penelitian rdrp")
+	if err := c.PenelitianRDRPRepository.Update(tx, data); err != nil {
+		c.Log.WithError(err).Error("error updating PenelitianRDRP")
 		return nil, err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error updating penelitian rdrp")
+		c.Log.WithError(err).Error("error updating PenelitianRDRP")
 		return nil, err
 	}
 
-	return converter.PenelitianRDRPToResponse(PenelitianRDRP), nil
+	return converter.PenelitianRDRPToResponse(data), nil
 }
 
 func (c *PenelitianRDRPUseCase) Delete(ctx context.Context, request *model.DeletePenelitianRDRPRequest) error {
@@ -123,19 +118,19 @@ func (c *PenelitianRDRPUseCase) Delete(ctx context.Context, request *model.Delet
 		return err
 	}
 
-	penelitianRDRP := new(entity.PenelitianRDRP)
-	if err := c.PenelitianRDRPRepository.FindById(tx, penelitianRDRP, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting penelitianRDRP")
+	data := new(entity.PenelitianRDRP)
+	if err := c.PenelitianRDRPRepository.FindById(tx, data, request.ID); err != nil {
+		c.Log.WithError(err).Error("error getting PenelitianRDRP")
 		return err
 	}
 
-	if err := c.PenelitianRDRPRepository.Delete(tx, penelitianRDRP); err != nil {
-		c.Log.WithError(err).Error("error deleting penelitianRDRP")
+	if err := c.PenelitianRDRPRepository.Delete(tx, data); err != nil {
+		c.Log.WithError(err).Error("error deleting PenelitianRDRP")
 		return err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error deleting penelitianRDRP")
+		c.Log.WithError(err).Error("error deleting PenelitianRDRP")
 		return err
 	}
 

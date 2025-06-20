@@ -19,12 +19,7 @@ type PenelitianPDPPUseCase struct {
 	PenelitianPDPPRepository *repository.PenelitianPDPPRepository
 }
 
-func NewPenelitianPDPPUseCase(
-	db *gorm.DB,
-	logger *logrus.Logger,
-	validate *validator.Validate,
-	PenelitianPDPPRepository *repository.PenelitianPDPPRepository,
-) *PenelitianPDPPUseCase {
+func NewPenelitianPDPPUseCase(db *gorm.DB, logger *logrus.Logger, validate *validator.Validate, PenelitianPDPPRepository *repository.PenelitianPDPPRepository) *PenelitianPDPPUseCase {
 	return &PenelitianPDPPUseCase{
 		DB:                       db,
 		Log:                      logger,
@@ -42,13 +37,13 @@ func (c *PenelitianPDPPUseCase) Create(ctx context.Context, request *model.Creat
 		return nil, err
 	}
 
-	PenelitianPDPP := &entity.PenelitianPDPP{
+	data := &entity.PenelitianPDPP{
 		Title:   request.Title,
 		Content: request.Content,
 	}
 
-	if err := c.PenelitianPDPPRepository.Create(tx, PenelitianPDPP); err != nil {
-		c.Log.WithError(err).Error("failed to create penelitian pdpp")
+	if err := c.PenelitianPDPPRepository.Create(tx, data); err != nil {
+		c.Log.WithError(err).Error("failed to create PenelitianPDPP")
 		return nil, err
 	}
 
@@ -57,27 +52,27 @@ func (c *PenelitianPDPPUseCase) Create(ctx context.Context, request *model.Creat
 		return nil, err
 	}
 
-	return converter.PenelitianPDPPToResponse(PenelitianPDPP), nil
+	return converter.PenelitianPDPPToResponse(data), nil
 }
 
 func (c *PenelitianPDPPUseCase) FindAll(ctx context.Context) ([]model.PenelitianPDPPResponse, error) {
 	tx := c.DB.WithContext(ctx).Begin()
 	defer tx.Rollback()
 
-	PenelitianPDPP, err := c.PenelitianPDPPRepository.FindAll(tx)
+	result, err := c.PenelitianPDPPRepository.FindAll(tx)
 	if err != nil {
-		c.Log.WithError(err).Error("error getting penelitian pdpp")
+		c.Log.WithError(err).Error("error getting PenelitianPDPP")
 		return nil, err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error getting penelitian pdpp")
+		c.Log.WithError(err).Error("error getting PenelitianPDPP")
 		return nil, err
 	}
 
-	responses := make([]model.PenelitianPDPPResponse, len(PenelitianPDPP))
-	for i, penelitianPdpp := range PenelitianPDPP {
-		responses[i] = *converter.PenelitianPDPPToResponse(&penelitianPdpp)
+	responses := make([]model.PenelitianPDPPResponse, len(result))
+	for i, v := range result {
+		responses[i] = *converter.PenelitianPDPPToResponse(&v)
 	}
 
 	return responses, nil
@@ -87,9 +82,9 @@ func (c *PenelitianPDPPUseCase) Update(ctx context.Context, request *model.Updat
 	tx := c.DB.WithContext(ctx).Begin()
 	defer tx.Rollback()
 
-	PenelitianPDPP := new(entity.PenelitianPDPP)
-	if err := c.PenelitianPDPPRepository.FindById(tx, PenelitianPDPP, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting penelitian pdpp")
+	data := new(entity.PenelitianPDPP)
+	if err := c.PenelitianPDPPRepository.FindById(tx, data, request.ID); err != nil {
+		c.Log.WithError(err).Error("error getting PenelitianPDPP")
 		return nil, err
 	}
 
@@ -98,20 +93,20 @@ func (c *PenelitianPDPPUseCase) Update(ctx context.Context, request *model.Updat
 		return nil, err
 	}
 
-	PenelitianPDPP.Title = request.Title
-	PenelitianPDPP.Content = request.Content
+	data.Title = request.Title
+	data.Content = request.Content
 
-	if err := c.PenelitianPDPPRepository.Update(tx, PenelitianPDPP); err != nil {
-		c.Log.WithError(err).Error("error updating penelitian pdpp")
+	if err := c.PenelitianPDPPRepository.Update(tx, data); err != nil {
+		c.Log.WithError(err).Error("error updating PenelitianPDPP")
 		return nil, err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error updating penelitian pdpp")
+		c.Log.WithError(err).Error("error updating PenelitianPDPP")
 		return nil, err
 	}
 
-	return converter.PenelitianPDPPToResponse(PenelitianPDPP), nil
+	return converter.PenelitianPDPPToResponse(data), nil
 }
 
 func (c *PenelitianPDPPUseCase) Delete(ctx context.Context, request *model.DeletePenelitianPDPPRequest) error {
@@ -123,19 +118,19 @@ func (c *PenelitianPDPPUseCase) Delete(ctx context.Context, request *model.Delet
 		return err
 	}
 
-	penelitianPDPP := new(entity.PenelitianPDPP)
-	if err := c.PenelitianPDPPRepository.FindById(tx, penelitianPDPP, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting penelitian pdpp")
+	data := new(entity.PenelitianPDPP)
+	if err := c.PenelitianPDPPRepository.FindById(tx, data, request.ID); err != nil {
+		c.Log.WithError(err).Error("error getting PenelitianPDPP")
 		return err
 	}
 
-	if err := c.PenelitianPDPPRepository.Delete(tx, penelitianPDPP); err != nil {
-		c.Log.WithError(err).Error("error deleting penelitian pdpp")
+	if err := c.PenelitianPDPPRepository.Delete(tx, data); err != nil {
+		c.Log.WithError(err).Error("error deleting PenelitianPDPP")
 		return err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error deleting penelitian pdpp")
+		c.Log.WithError(err).Error("error deleting PenelitianPDPP")
 		return err
 	}
 

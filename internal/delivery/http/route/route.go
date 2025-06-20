@@ -9,21 +9,26 @@ type RouteConfig struct {
 	Router *mux.Router
 
 	// all field controller
-	ProfilVisiMisiController *ProfilVisiMisiController
-	ProfilSODTController     *ProfilSODTController
-	PKMRDRPController        *PKMRDRPController
-	PKMPDPPController        *PKMPDPPController
-	PKMTCRController         *PKMTCRController
-	PKMSKRController         *PKMSKRController
-	PKMHPPController         *PKMHPPController
-	PKMSTPController         *PKMSTPController
-	PKMBADMEController       *PKMBADMEController
-	PKMLPController          *PKMLPController
-	HKIMHSController         *HKIMHSController
-	HKIDosenController       *HKIDosenController
-	PenelitianRDRPController *PenelitianRDRPController
-	PenelitianPDPPController *PenelitianPDPPController
-	PenelitianTCRController  *PenelitianTCRController
+	ProfilVisiMisiController  *ProfilVisiMisiController
+	ProfilSODTController      *ProfilSODTController
+	PKMRDRPController         *PKMRDRPController
+	PKMPDPPController         *PKMPDPPController
+	PKMTCRController          *PKMTCRController
+	PKMSKRController          *PKMSKRController
+	PKMHPPController          *PKMHPPController
+	PKMSTPController          *PKMSTPController
+	PKMBADMEController        *PKMBADMEController
+	PKMLPController           *PKMLPController
+	HKIMHSController          *HKIMHSController
+	HKIDosenController        *HKIDosenController
+	PenelitianRDRPController  *PenelitianRDRPController
+	PenelitianPDPPController  *PenelitianPDPPController
+	PenelitianTCRController   *PenelitianTCRController
+	PenelitianSKRController   *PenelitianSKRController
+	PenelitianHPPController   *PenelitianHPPController
+	PenelitianSTPController   *PenelitianSTPController
+	PenelitianBADMEController *PenelitianBADMEController
+	PenelitianLPController    *PenelitianLPController
 }
 
 func (route *RouteConfig) Setup() {
@@ -110,6 +115,31 @@ func (route *RouteConfig) SetupGuestRoute() {
 	penelitianRouter.HandleFunc("/tcr", route.PenelitianTCRController.List).Methods("GET")
 	penelitianRouter.HandleFunc("/tcr/{id}", route.PenelitianTCRController.Update).Methods("PUT")
 	penelitianRouter.HandleFunc("/tcr/{id}", route.PenelitianTCRController.Delete).Methods("DELETE")
+
+	penelitianRouter.HandleFunc("/skr", route.PenelitianSKRController.Create).Methods("POST")
+	penelitianRouter.HandleFunc("/skr", route.PenelitianSKRController.List).Methods("GET")
+	penelitianRouter.HandleFunc("/skr/{id}", route.PenelitianSKRController.Update).Methods("PUT")
+	penelitianRouter.HandleFunc("/skr/{id}", route.PenelitianSKRController.Delete).Methods("DELETE")
+
+	penelitianRouter.HandleFunc("/hpp", route.PenelitianHPPController.Create).Methods("POST")
+	penelitianRouter.HandleFunc("/hpp", route.PenelitianHPPController.List).Methods("GET")
+	penelitianRouter.HandleFunc("/hpp/{id}", route.PenelitianHPPController.Update).Methods("PUT")
+	penelitianRouter.HandleFunc("/hpp/{id}", route.PenelitianHPPController.Delete).Methods("DELETE")
+
+	penelitianRouter.HandleFunc("/stp", route.PenelitianSTPController.Create).Methods("POST")
+	penelitianRouter.HandleFunc("/stp", route.PenelitianSTPController.List).Methods("GET")
+	penelitianRouter.HandleFunc("/stp/{id}", route.PenelitianSTPController.Update).Methods("PUT")
+	penelitianRouter.HandleFunc("/stp/{id}", route.PenelitianSTPController.Delete).Methods("DELETE")
+
+	penelitianRouter.HandleFunc("/badme", route.PenelitianBADMEController.Create).Methods("POST")
+	penelitianRouter.HandleFunc("/badme", route.PenelitianBADMEController.List).Methods("GET")
+	penelitianRouter.HandleFunc("/badme/{id}", route.PenelitianBADMEController.Update).Methods("PUT")
+	penelitianRouter.HandleFunc("/badme/{id}", route.PenelitianBADMEController.Delete).Methods("DELETE")
+
+	penelitianRouter.HandleFunc("/lp", route.PenelitianLPController.Create).Methods("POST")
+	penelitianRouter.HandleFunc("/lp", route.PenelitianLPController.List).Methods("GET")
+	penelitianRouter.HandleFunc("/lp/{id}", route.PenelitianLPController.Update).Methods("PUT")
+	penelitianRouter.HandleFunc("/lp/{id}", route.PenelitianLPController.Delete).Methods("DELETE")
 
 }
 
