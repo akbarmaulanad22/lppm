@@ -18,6 +18,7 @@ type RouteConfig struct {
 	PKMHPPController         *PKMHPPController
 	PKMSTPController         *PKMSTPController
 	PKMBADMEController       *PKMBADMEController
+	PKMLPController          *PKMLPController
 	HKIMHSController         *HKIMHSController
 	HKIDosenController       *HKIDosenController
 	PenelitianRDRPController *PenelitianRDRPController
