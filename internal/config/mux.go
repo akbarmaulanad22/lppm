@@ -32,6 +32,7 @@ func NewMux(config *MuxConfig) {
 	hkiMhsRepository := repository.NewHKIMHSRepository(config.Log)
 	hkiDosenRepository := repository.NewHKIDosenRepository(config.Log)
 	penelitianRDRPRepository := repository.NewPenelitianRDRPRepository(config.Log)
+	penelitianPDPPRepository := repository.NewPenelitianPDPPRepository(config.Log)
 
 	// setup use cases
 	profilVisiMisiUseCase := usecase.NewProfilVisiMisiUseCase(config.DB, config.Log, config.Validate, profilVisiMisiRepository)
@@ -43,6 +44,7 @@ func NewMux(config *MuxConfig) {
 	hkiMhsUseCase := usecase.NewHKIMHSUseCase(config.DB, config.Log, config.Validate, hkiMhsRepository)
 	hkiDosenUseCase := usecase.NewHKIDosenUseCase(config.DB, config.Log, config.Validate, hkiDosenRepository)
 	penelitianRDRPUseCase := usecase.NewPenelitianRDRPUseCase(config.DB, config.Log, config.Validate, penelitianRDRPRepository)
+	penelitianPDPPUseCase := usecase.NewPenelitianPDPPUseCase(config.DB, config.Log, config.Validate, penelitianPDPPRepository)
 
 	// setup controller
 	profilVisiMisiController := route.NewProfilVisiMisiController(profilVisiMisiUseCase, config.Log)
@@ -54,6 +56,7 @@ func NewMux(config *MuxConfig) {
 	hkiMhsController := route.NewHKIMHSController(hkiMhsUseCase, config.Log)
 	hkiDosenController := route.NewHKIDosenController(hkiDosenUseCase, config.Log)
 	penelitianRDRPController := route.NewPenelitianRDRPController(penelitianRDRPUseCase, config.Log)
+	penelitianPDPPController := route.NewPenelitianPDPPController(penelitianPDPPUseCase, config.Log)
 
 	routeConfig := route.RouteConfig{
 		Router:                   config.Router,
@@ -66,6 +69,7 @@ func NewMux(config *MuxConfig) {
 		HKIMHSController:         hkiMhsController,
 		HKIDosenController:       hkiDosenController,
 		PenelitianRDRPController: penelitianRDRPController,
+		PenelitianPDPPController: penelitianPDPPController,
 	}
 	routeConfig.Setup()
 
