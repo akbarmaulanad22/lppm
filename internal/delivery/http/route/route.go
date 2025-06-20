@@ -13,9 +13,10 @@ type RouteConfig struct {
 	ProfilSODTController     *ProfilSODTController
 	PKMRDRPController        *PKMRDRPController
 	PKMPDPPController        *PKMPDPPController
-	PKMTCRController        *PKMTCRController
+	PKMTCRController         *PKMTCRController
 	HKIMHSController         *HKIMHSController
 	HKIDosenController       *HKIDosenController
+	PenelitianRDRPController *PenelitianRDRPController
 }
 
 func (route *RouteConfig) Setup() {
@@ -61,6 +62,12 @@ func (route *RouteConfig) SetupGuestRoute() {
 	hkiRouter.HandleFunc("/dosen", route.HKIDosenController.List).Methods("GET")
 	hkiRouter.HandleFunc("/dosen/{id}", route.HKIDosenController.Update).Methods("PUT")
 	hkiRouter.HandleFunc("/dosen/{id}", route.HKIDosenController.Delete).Methods("DELETE")
+
+	penelitianRouter := route.Router.PathPrefix("/penelitian").Subrouter()
+	penelitianRouter.HandleFunc("/rdrp", route.PenelitianRDRPController.Create).Methods("POST")
+	penelitianRouter.HandleFunc("/rdrp", route.PenelitianRDRPController.List).Methods("GET")
+	penelitianRouter.HandleFunc("/rdrp/{id}", route.PenelitianRDRPController.Update).Methods("PUT")
+	penelitianRouter.HandleFunc("/rdrp/{id}", route.PenelitianRDRPController.Delete).Methods("DELETE")
 
 }
 
