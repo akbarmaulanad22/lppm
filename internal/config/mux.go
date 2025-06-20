@@ -25,21 +25,24 @@ func NewMux(config *MuxConfig) {
 	// setup repositories
 	profilVisiMisiRepository := repository.NewProfilVisiMisiRepository(config.Log)
 	profilSODTRepository := repository.NewProfilSODTRepository(config.Log)
-	pkmRepository := repository.NewPKMRDRPRepository(config.Log)
+	pkmRdrpRepository := repository.NewPKMRDRPRepository(config.Log)
+	pkmPdppRepository := repository.NewPKMPDPPRepository(config.Log)
 	hkiMhsRepository := repository.NewHKIMHSRepository(config.Log)
 	hkiDosenRepository := repository.NewHKIDosenRepository(config.Log)
 
 	// setup use cases
 	profilVisiMisiUseCase := usecase.NewProfilVisiMisiUseCase(config.DB, config.Log, config.Validate, profilVisiMisiRepository)
 	profilSODTUseCase := usecase.NewProfilSODTUseCase(config.DB, config.Log, config.Validate, profilSODTRepository)
-	pkmUseCase := usecase.NewPKMRDRPUseCase(config.DB, config.Log, config.Validate, pkmRepository)
+	pkmRdrpUseCase := usecase.NewPKMRDRPUseCase(config.DB, config.Log, config.Validate, pkmRdrpRepository)
+	pkmPdppUseCase := usecase.NewPKMPDPPUseCase(config.DB, config.Log, config.Validate, pkmPdppRepository)
 	hkiMhsUseCase := usecase.NewHKIMHSUseCase(config.DB, config.Log, config.Validate, hkiMhsRepository)
 	hkiDosenUseCase := usecase.NewHKIDosenUseCase(config.DB, config.Log, config.Validate, hkiDosenRepository)
 
 	// setup controller
 	profilVisiMisiController := route.NewProfilVisiMisiController(profilVisiMisiUseCase, config.Log)
 	profilSODTController := route.NewProfilSODTController(profilSODTUseCase, config.Log)
-	PKMRDRPController := route.NewPKMRDRPController(pkmUseCase, config.Log)
+	PKMRDRPController := route.NewPKMRDRPController(pkmRdrpUseCase, config.Log)
+	PKMPDPPController := route.NewPKMPDPPController(pkmPdppUseCase, config.Log)
 	hkiMhsController := route.NewHKIMHSController(hkiMhsUseCase, config.Log)
 	hkiDosenController := route.NewHKIDosenController(hkiDosenUseCase, config.Log)
 
@@ -48,6 +51,7 @@ func NewMux(config *MuxConfig) {
 		ProfilVisiMisiController: profilVisiMisiController,
 		ProfilSODTController:     profilSODTController,
 		PKMRDRPController:        PKMRDRPController,
+		PKMPDPPController:        PKMPDPPController,
 		HKIMHSController:         hkiMhsController,
 		HKIDosenController:       hkiDosenController,
 	}
