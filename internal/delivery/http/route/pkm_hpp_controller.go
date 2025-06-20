@@ -11,21 +11,21 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type PKMTCRController struct {
-	UseCase *usecase.PKMTCRUseCase
+type PKMHPPController struct {
+	UseCase *usecase.PKMHPPUseCase
 	Log     *logrus.Logger
 }
 
-func NewPKMTCRController(useCase *usecase.PKMTCRUseCase, log *logrus.Logger) *PKMTCRController {
-	return &PKMTCRController{
+func NewPKMHPPController(useCase *usecase.PKMHPPUseCase, log *logrus.Logger) *PKMHPPController {
+	return &PKMHPPController{
 		UseCase: useCase,
 		Log:     log,
 	}
 }
 
-func (c *PKMTCRController) Create(w http.ResponseWriter, r *http.Request) {
+func (c *PKMHPPController) Create(w http.ResponseWriter, r *http.Request) {
 
-	request := new(model.CreatePKMTCRRequest)
+	request := new(model.CreatePKMHPPRequest)
 
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		c.Log.Warnf("Failed to parse request body: %+v", err)
@@ -41,17 +41,17 @@ func (c *PKMTCRController) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(model.WebResponse[*model.PKMTCRResponse]{Data: response}); err != nil {
+	if err := json.NewEncoder(w).Encode(model.WebResponse[*model.PKMHPPResponse]{Data: response}); err != nil {
 		c.Log.Warnf("Failed to write response: %+v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
 
-func (c *PKMTCRController) List(w http.ResponseWriter, r *http.Request) {
+func (c *PKMHPPController) List(w http.ResponseWriter, r *http.Request) {
 
 	responses, err := c.UseCase.FindAll(r.Context())
 	if err != nil {
-		c.Log.WithError(err).Error("error get all pkm tcr")
+		c.Log.WithError(err).Error("error get all pkm hpp")
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
@@ -64,13 +64,13 @@ func (c *PKMTCRController) List(w http.ResponseWriter, r *http.Request) {
 	// }
 
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(model.WebResponse[[]model.PKMTCRResponse]{Data: responses}); err != nil {
+	if err := json.NewEncoder(w).Encode(model.WebResponse[[]model.PKMHPPResponse]{Data: responses}); err != nil {
 		c.Log.Warnf("Failed to write response: %+v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
 
-func (c *PKMTCRController) Update(w http.ResponseWriter, r *http.Request) {
+func (c *PKMHPPController) Update(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	id := vars["id"]
@@ -81,7 +81,7 @@ func (c *PKMTCRController) Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	request := new(model.UpdatePKMTCRRequest)
+	request := new(model.UpdatePKMHPPRequest)
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		c.Log.Warnf("Failed to parse request body: %+v", err)
 		http.Error(w, "Bad Request", http.StatusBadRequest)
@@ -97,13 +97,13 @@ func (c *PKMTCRController) Update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(model.WebResponse[*model.PKMTCRResponse]{Data: response}); err != nil {
+	if err := json.NewEncoder(w).Encode(model.WebResponse[*model.PKMHPPResponse]{Data: response}); err != nil {
 		c.Log.Warnf("Failed to write response: %+v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
 
-func (c *PKMTCRController) Delete(w http.ResponseWriter, r *http.Request) {
+func (c *PKMHPPController) Delete(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 	idUint, err := strconv.Atoi(id)
@@ -113,12 +113,12 @@ func (c *PKMTCRController) Delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	request := &model.DeletePKMTCRRequest{
+	request := &model.DeletePKMHPPRequest{
 		ID: uint(idUint),
 	}
 
 	if err := c.UseCase.Delete(r.Context(), request); err != nil {
-		c.Log.WithError(err).Error("error deleting pkm tcr")
+		c.Log.WithError(err).Error("error deleting pkm hpp")
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}

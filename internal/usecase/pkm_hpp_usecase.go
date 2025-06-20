@@ -12,28 +12,28 @@ import (
 	"gorm.io/gorm"
 )
 
-type PKMRDRPUseCase struct {
+type PKMHPPUseCase struct {
 	DB                       *gorm.DB
 	Log                      *logrus.Logger
 	Validate                 *validator.Validate
-	PKMRDRPRepository *repository.PKMRDRPRepository
+	PKMHPPRepository *repository.PKMHPPRepository
 }
 
-func NewPKMRDRPUseCase(
+func NewPKMHPPUseCase(
 	db *gorm.DB,
 	logger *logrus.Logger,
 	validate *validator.Validate,
-	PKMRDRPRepository *repository.PKMRDRPRepository,
-) *PKMRDRPUseCase {
-	return &PKMRDRPUseCase{
+	PKMHPPRepository *repository.PKMHPPRepository,
+) *PKMHPPUseCase {
+	return &PKMHPPUseCase{
 		DB:                       db,
 		Log:                      logger,
 		Validate:                 validate,
-		PKMRDRPRepository: PKMRDRPRepository,
+		PKMHPPRepository: PKMHPPRepository,
 	}
 }
 
-func (c *PKMRDRPUseCase) Create(ctx context.Context, request *model.CreatePKMRDRPRequest) (*model.PKMRDRPResponse, error) {
+func (c *PKMHPPUseCase) Create(ctx context.Context, request *model.CreatePKMHPPRequest) (*model.PKMHPPResponse, error) {
 	tx := c.DB.WithContext(ctx).Begin()
 	defer tx.Rollback()
 
@@ -42,12 +42,12 @@ func (c *PKMRDRPUseCase) Create(ctx context.Context, request *model.CreatePKMRDR
 		return nil, err
 	}
 
-	PKMRDRP := &entity.PKMRDRP{
+	PKMHPP := &entity.PKMHPP{
 		Title:   request.Title,
 		Content: request.Content,
 	}
 
-	if err := c.PKMRDRPRepository.Create(tx, PKMRDRP); err != nil {
+	if err := c.PKMHPPRepository.Create(tx, PKMHPP); err != nil {
 		c.Log.WithError(err).Error("failed to create pkm hpp")
 		return nil, err
 	}
@@ -57,14 +57,14 @@ func (c *PKMRDRPUseCase) Create(ctx context.Context, request *model.CreatePKMRDR
 		return nil, err
 	}
 
-	return converter.PKMRDRPToResponse(PKMRDRP), nil
+	return converter.PKMHPPToResponse(PKMHPP), nil
 }
 
-func (c *PKMRDRPUseCase) FindAll(ctx context.Context) ([]model.PKMRDRPResponse, error) {
+func (c *PKMHPPUseCase) FindAll(ctx context.Context) ([]model.PKMHPPResponse, error) {
 	tx := c.DB.WithContext(ctx).Begin()
 	defer tx.Rollback()
 
-	PKMRDRP, err := c.PKMRDRPRepository.FindAll(tx)
+	PKMHPP, err := c.PKMHPPRepository.FindAll(tx)
 	if err != nil {
 		c.Log.WithError(err).Error("error getting pkm hpp")
 		return nil, err
@@ -75,20 +75,20 @@ func (c *PKMRDRPUseCase) FindAll(ctx context.Context) ([]model.PKMRDRPResponse, 
 		return nil, err
 	}
 
-	responses := make([]model.PKMRDRPResponse, len(PKMRDRP))
-	for i, visiMisi := range PKMRDRP {
-		responses[i] = *converter.PKMRDRPToResponse(&visiMisi)
+	responses := make([]model.PKMHPPResponse, len(PKMHPP))
+	for i, visiMisi := range PKMHPP {
+		responses[i] = *converter.PKMHPPToResponse(&visiMisi)
 	}
 
 	return responses, nil
 }
 
-func (c *PKMRDRPUseCase) Update(ctx context.Context, request *model.UpdatePKMRDRPRequest) (*model.PKMRDRPResponse, error) {
+func (c *PKMHPPUseCase) Update(ctx context.Context, request *model.UpdatePKMHPPRequest) (*model.PKMHPPResponse, error) {
 	tx := c.DB.WithContext(ctx).Begin()
 	defer tx.Rollback()
 
-	PKMRDRP := new(entity.PKMRDRP)
-	if err := c.PKMRDRPRepository.FindById(tx, PKMRDRP, request.ID); err != nil {
+	PKMHPP := new(entity.PKMHPP)
+	if err := c.PKMHPPRepository.FindById(tx, PKMHPP, request.ID); err != nil {
 		c.Log.WithError(err).Error("error getting pkm hpp")
 		return nil, err
 	}
@@ -98,10 +98,10 @@ func (c *PKMRDRPUseCase) Update(ctx context.Context, request *model.UpdatePKMRDR
 		return nil, err
 	}
 
-	PKMRDRP.Title = request.Title
-	PKMRDRP.Content = request.Content
+	PKMHPP.Title = request.Title
+	PKMHPP.Content = request.Content
 
-	if err := c.PKMRDRPRepository.Update(tx, PKMRDRP); err != nil {
+	if err := c.PKMHPPRepository.Update(tx, PKMHPP); err != nil {
 		c.Log.WithError(err).Error("error updating pkm hpp")
 		return nil, err
 	}
@@ -111,10 +111,10 @@ func (c *PKMRDRPUseCase) Update(ctx context.Context, request *model.UpdatePKMRDR
 		return nil, err
 	}
 
-	return converter.PKMRDRPToResponse(PKMRDRP), nil
+	return converter.PKMHPPToResponse(PKMHPP), nil
 }
 
-func (c *PKMRDRPUseCase) Delete(ctx context.Context, request *model.DeletePKMRDRPRequest) error {
+func (c *PKMHPPUseCase) Delete(ctx context.Context, request *model.DeletePKMHPPRequest) error {
 	tx := c.DB.WithContext(ctx).Begin()
 	defer tx.Rollback()
 
@@ -123,13 +123,13 @@ func (c *PKMRDRPUseCase) Delete(ctx context.Context, request *model.DeletePKMRDR
 		return err
 	}
 
-	contact := new(entity.PKMRDRP)
-	if err := c.PKMRDRPRepository.FindById(tx, contact, request.ID); err != nil {
+	contact := new(entity.PKMHPP)
+	if err := c.PKMHPPRepository.FindById(tx, contact, request.ID); err != nil {
 		c.Log.WithError(err).Error("error getting contact")
 		return err
 	}
 
-	if err := c.PKMRDRPRepository.Delete(tx, contact); err != nil {
+	if err := c.PKMHPPRepository.Delete(tx, contact); err != nil {
 		c.Log.WithError(err).Error("error deleting contact")
 		return err
 	}

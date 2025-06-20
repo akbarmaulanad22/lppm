@@ -29,6 +29,7 @@ func NewMux(config *MuxConfig) {
 	pkmPdppRepository := repository.NewPKMPDPPRepository(config.Log)
 	pkmTcrRepository := repository.NewPKMTCRRepository(config.Log)
 	pkmSkrRepository := repository.NewPKMSKRRepository(config.Log)
+	pkmHppRepository := repository.NewPKMHPPRepository(config.Log)
 	hkiMhsRepository := repository.NewHKIMHSRepository(config.Log)
 	hkiDosenRepository := repository.NewHKIDosenRepository(config.Log)
 
@@ -39,6 +40,7 @@ func NewMux(config *MuxConfig) {
 	pkmPdppUseCase := usecase.NewPKMPDPPUseCase(config.DB, config.Log, config.Validate, pkmPdppRepository)
 	pkmTcrUseCase := usecase.NewPKMTCRUseCase(config.DB, config.Log, config.Validate, pkmTcrRepository)
 	pkmSkrUseCase := usecase.NewPKMSKRUseCase(config.DB, config.Log, config.Validate, pkmSkrRepository)
+	pkmHppUseCase := usecase.NewPKMHPPUseCase(config.DB, config.Log, config.Validate, pkmHppRepository)
 	hkiMhsUseCase := usecase.NewHKIMHSUseCase(config.DB, config.Log, config.Validate, hkiMhsRepository)
 	hkiDosenUseCase := usecase.NewHKIDosenUseCase(config.DB, config.Log, config.Validate, hkiDosenRepository)
 
@@ -49,6 +51,7 @@ func NewMux(config *MuxConfig) {
 	PKMPDPPController := route.NewPKMPDPPController(pkmPdppUseCase, config.Log)
 	PKMTCRController := route.NewPKMTCRController(pkmTcrUseCase, config.Log)
 	PKMSKRController := route.NewPKMSKRController(pkmSkrUseCase, config.Log)
+	PKMHPPController := route.NewPKMHPPController(pkmHppUseCase, config.Log)
 	hkiMhsController := route.NewHKIMHSController(hkiMhsUseCase, config.Log)
 	hkiDosenController := route.NewHKIDosenController(hkiDosenUseCase, config.Log)
 
@@ -60,6 +63,7 @@ func NewMux(config *MuxConfig) {
 		PKMPDPPController:        PKMPDPPController,
 		PKMTCRController:         PKMTCRController,
 		PKMSKRController:         PKMSKRController,
+		PKMHPPController:         PKMHPPController,
 		HKIMHSController:         hkiMhsController,
 		HKIDosenController:       hkiDosenController,
 	}

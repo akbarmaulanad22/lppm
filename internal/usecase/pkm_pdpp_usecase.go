@@ -48,7 +48,7 @@ func (c *PKMPDPPUseCase) Create(ctx context.Context, request *model.CreatePKMPDP
 	}
 
 	if err := c.PKMPDPPRepository.Create(tx, PKMPDPP); err != nil {
-		c.Log.WithError(err).Error("failed to create profil Visi Misi")
+		c.Log.WithError(err).Error("failed to create pkm hdpp")
 		return nil, err
 	}
 
@@ -66,12 +66,12 @@ func (c *PKMPDPPUseCase) FindAll(ctx context.Context) ([]model.PKMPDPPResponse, 
 
 	PKMPDPP, err := c.PKMPDPPRepository.FindAll(tx)
 	if err != nil {
-		c.Log.WithError(err).Error("error getting profil Visi Misi")
+		c.Log.WithError(err).Error("error getting pkm hdpp")
 		return nil, err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error getting profil Visi Misi")
+		c.Log.WithError(err).Error("error getting pkm hdpp")
 		return nil, err
 	}
 
@@ -89,7 +89,7 @@ func (c *PKMPDPPUseCase) Update(ctx context.Context, request *model.UpdatePKMPDP
 
 	PKMPDPP := new(entity.PKMPDPP)
 	if err := c.PKMPDPPRepository.FindById(tx, PKMPDPP, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting profil Visi Misi")
+		c.Log.WithError(err).Error("error getting pkm hdpp")
 		return nil, err
 	}
 
@@ -102,12 +102,12 @@ func (c *PKMPDPPUseCase) Update(ctx context.Context, request *model.UpdatePKMPDP
 	PKMPDPP.Content = request.Content
 
 	if err := c.PKMPDPPRepository.Update(tx, PKMPDPP); err != nil {
-		c.Log.WithError(err).Error("error updating profil Visi Misi")
+		c.Log.WithError(err).Error("error updating pkm hdpp")
 		return nil, err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error updating profil Visi Misi")
+		c.Log.WithError(err).Error("error updating pkm hdpp")
 		return nil, err
 	}
 

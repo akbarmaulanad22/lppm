@@ -51,7 +51,7 @@ func (c *PKMSKRController) List(w http.ResponseWriter, r *http.Request) {
 
 	responses, err := c.UseCase.FindAll(r.Context())
 	if err != nil {
-		c.Log.WithError(err).Error("error get all profil visi misi")
+		c.Log.WithError(err).Error("error get all pkm skr")
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
@@ -118,7 +118,7 @@ func (c *PKMSKRController) Delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := c.UseCase.Delete(r.Context(), request); err != nil {
-		c.Log.WithError(err).Error("error deleting profil visi misi")
+		c.Log.WithError(err).Error("error deleting pkm skr")
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}

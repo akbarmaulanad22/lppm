@@ -48,7 +48,7 @@ func (c *PKMTCRUseCase) Create(ctx context.Context, request *model.CreatePKMTCRR
 	}
 
 	if err := c.PKMTCRRepository.Create(tx, PKMTCR); err != nil {
-		c.Log.WithError(err).Error("failed to create profil Visi Misi")
+		c.Log.WithError(err).Error("failed to create pkm tcr")
 		return nil, err
 	}
 
@@ -66,12 +66,12 @@ func (c *PKMTCRUseCase) FindAll(ctx context.Context) ([]model.PKMTCRResponse, er
 
 	PKMTCR, err := c.PKMTCRRepository.FindAll(tx)
 	if err != nil {
-		c.Log.WithError(err).Error("error getting profil Visi Misi")
+		c.Log.WithError(err).Error("error getting pkm tcr")
 		return nil, err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error getting profil Visi Misi")
+		c.Log.WithError(err).Error("error getting pkm tcr")
 		return nil, err
 	}
 
@@ -89,7 +89,7 @@ func (c *PKMTCRUseCase) Update(ctx context.Context, request *model.UpdatePKMTCRR
 
 	PKMTCR := new(entity.PKMTCR)
 	if err := c.PKMTCRRepository.FindById(tx, PKMTCR, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting profil Visi Misi")
+		c.Log.WithError(err).Error("error getting pkm tcr")
 		return nil, err
 	}
 
@@ -102,12 +102,12 @@ func (c *PKMTCRUseCase) Update(ctx context.Context, request *model.UpdatePKMTCRR
 	PKMTCR.Content = request.Content
 
 	if err := c.PKMTCRRepository.Update(tx, PKMTCR); err != nil {
-		c.Log.WithError(err).Error("error updating profil Visi Misi")
+		c.Log.WithError(err).Error("error updating pkm tcr")
 		return nil, err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error updating profil Visi Misi")
+		c.Log.WithError(err).Error("error updating pkm tcr")
 		return nil, err
 	}
 

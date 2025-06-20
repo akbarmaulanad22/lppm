@@ -48,7 +48,7 @@ func (c *PKMSKRUseCase) Create(ctx context.Context, request *model.CreatePKMSKRR
 	}
 
 	if err := c.PKMSKRRepository.Create(tx, PKMSKR); err != nil {
-		c.Log.WithError(err).Error("failed to create profil Visi Misi")
+		c.Log.WithError(err).Error("failed to create pkm skr")
 		return nil, err
 	}
 
@@ -66,12 +66,12 @@ func (c *PKMSKRUseCase) FindAll(ctx context.Context) ([]model.PKMSKRResponse, er
 
 	PKMSKR, err := c.PKMSKRRepository.FindAll(tx)
 	if err != nil {
-		c.Log.WithError(err).Error("error getting profil Visi Misi")
+		c.Log.WithError(err).Error("error getting pkm skr")
 		return nil, err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error getting profil Visi Misi")
+		c.Log.WithError(err).Error("error getting pkm skr")
 		return nil, err
 	}
 
@@ -89,7 +89,7 @@ func (c *PKMSKRUseCase) Update(ctx context.Context, request *model.UpdatePKMSKRR
 
 	PKMSKR := new(entity.PKMSKR)
 	if err := c.PKMSKRRepository.FindById(tx, PKMSKR, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting profil Visi Misi")
+		c.Log.WithError(err).Error("error getting pkm skr")
 		return nil, err
 	}
 
@@ -102,12 +102,12 @@ func (c *PKMSKRUseCase) Update(ctx context.Context, request *model.UpdatePKMSKRR
 	PKMSKR.Content = request.Content
 
 	if err := c.PKMSKRRepository.Update(tx, PKMSKR); err != nil {
-		c.Log.WithError(err).Error("error updating profil Visi Misi")
+		c.Log.WithError(err).Error("error updating pkm skr")
 		return nil, err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error updating profil Visi Misi")
+		c.Log.WithError(err).Error("error updating pkm skr")
 		return nil, err
 	}
 
