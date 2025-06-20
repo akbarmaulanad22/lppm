@@ -27,6 +27,7 @@ func NewMux(config *MuxConfig) {
 	profilSODTRepository := repository.NewProfilSODTRepository(config.Log)
 	pkmRdrpRepository := repository.NewPKMRDRPRepository(config.Log)
 	pkmPdppRepository := repository.NewPKMPDPPRepository(config.Log)
+	pkmTcrRepository := repository.NewPKMTCRRepository(config.Log)
 	hkiMhsRepository := repository.NewHKIMHSRepository(config.Log)
 
 	// setup use cases
@@ -34,6 +35,7 @@ func NewMux(config *MuxConfig) {
 	profilSODTUseCase := usecase.NewProfilSODTUseCase(config.DB, config.Log, config.Validate, profilSODTRepository)
 	pkmRdrpUseCase := usecase.NewPKMRDRPUseCase(config.DB, config.Log, config.Validate, pkmRdrpRepository)
 	pkmPdppUseCase := usecase.NewPKMPDPPUseCase(config.DB, config.Log, config.Validate, pkmPdppRepository)
+	pkmTcrUseCase := usecase.NewPKMTCRUseCase(config.DB, config.Log, config.Validate, pkmTcrRepository)
 	hkiMhsUseCase := usecase.NewHKIMHSUseCase(config.DB, config.Log, config.Validate, hkiMhsRepository)
 
 	// setup controller
@@ -41,6 +43,7 @@ func NewMux(config *MuxConfig) {
 	profilSODTController := route.NewProfilSODTController(profilSODTUseCase, config.Log)
 	PKMRDRPController := route.NewPKMRDRPController(pkmRdrpUseCase, config.Log)
 	PKMPDPPController := route.NewPKMPDPPController(pkmPdppUseCase, config.Log)
+	PKMTCRController := route.NewPKMTCRController(pkmTcrUseCase, config.Log)
 	hkiMhsController := route.NewHKIMHSController(hkiMhsUseCase, config.Log)
 
 	routeConfig := route.RouteConfig{
@@ -49,6 +52,7 @@ func NewMux(config *MuxConfig) {
 		ProfilSODTController:     profilSODTController,
 		PKMRDRPController:        PKMRDRPController,
 		PKMPDPPController:        PKMPDPPController,
+		PKMTCRController:        PKMTCRController,
 		HKIMHSController:         hkiMhsController,
 	}
 	routeConfig.Setup()
