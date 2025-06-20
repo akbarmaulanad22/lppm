@@ -19,6 +19,7 @@ type RouteConfig struct {
 	HKIMHSController         *HKIMHSController
 	HKIDosenController       *HKIDosenController
 	PenelitianRDRPController *PenelitianRDRPController
+	PenelitianPDPPController *PenelitianPDPPController
 }
 
 func (route *RouteConfig) Setup() {
@@ -81,6 +82,10 @@ func (route *RouteConfig) SetupGuestRoute() {
 	penelitianRouter.HandleFunc("/rdrp/{id}", route.PenelitianRDRPController.Update).Methods("PUT")
 	penelitianRouter.HandleFunc("/rdrp/{id}", route.PenelitianRDRPController.Delete).Methods("DELETE")
 
+	penelitianRouter.HandleFunc("/pdpp", route.PenelitianPDPPController.Create).Methods("POST")
+	penelitianRouter.HandleFunc("/pdpp", route.PenelitianPDPPController.List).Methods("GET")
+	penelitianRouter.HandleFunc("/pdpp/{id}", route.PenelitianPDPPController.Update).Methods("PUT")
+	penelitianRouter.HandleFunc("/pdpp/{id}", route.PenelitianPDPPController.Delete).Methods("DELETE")
 }
 
 func (route *RouteConfig) SetupAuthRoute() {
