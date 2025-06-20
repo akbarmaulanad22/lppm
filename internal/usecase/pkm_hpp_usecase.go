@@ -76,8 +76,8 @@ func (c *PKMHPPUseCase) FindAll(ctx context.Context) ([]model.PKMHPPResponse, er
 	}
 
 	responses := make([]model.PKMHPPResponse, len(PKMHPP))
-	for i, visiMisi := range PKMHPP {
-		responses[i] = *converter.PKMHPPToResponse(&visiMisi)
+	for i, pkmHpp := range PKMHPP {
+		responses[i] = *converter.PKMHPPToResponse(&pkmHpp)
 	}
 
 	return responses, nil
@@ -123,19 +123,19 @@ func (c *PKMHPPUseCase) Delete(ctx context.Context, request *model.DeletePKMHPPR
 		return err
 	}
 
-	contact := new(entity.PKMHPP)
-	if err := c.PKMHPPRepository.FindById(tx, contact, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting contact")
+	pkmHPP := new(entity.PKMHPP)
+	if err := c.PKMHPPRepository.FindById(tx, pkmHPP, request.ID); err != nil {
+		c.Log.WithError(err).Error("error getting pkmHPP")
 		return err
 	}
 
-	if err := c.PKMHPPRepository.Delete(tx, contact); err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+	if err := c.PKMHPPRepository.Delete(tx, pkmHPP); err != nil {
+		c.Log.WithError(err).Error("error deleting pkmHPP")
 		return err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+		c.Log.WithError(err).Error("error deleting pkmHPP")
 		return err
 	}
 

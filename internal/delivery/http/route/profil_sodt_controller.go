@@ -35,7 +35,7 @@ func (c *ProfilSODTController) Create(w http.ResponseWriter, r *http.Request) {
 
 	response, err := c.UseCase.Create(r.Context(), request)
 	if err != nil {
-		c.Log.WithError(err).Error("error creating contact")
+		c.Log.WithError(err).Error("error creating profil sodt")
 		http.Error(w, "Internal Server", http.StatusInternalServerError)
 		return
 	}
@@ -51,7 +51,7 @@ func (c *ProfilSODTController) List(w http.ResponseWriter, r *http.Request) {
 
 	responses, err := c.UseCase.FindAll(r.Context())
 	if err != nil {
-		c.Log.WithError(err).Error("error get all profil visi misi")
+		c.Log.WithError(err).Error("error get all profil sodt")
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
@@ -91,7 +91,7 @@ func (c *ProfilSODTController) Update(w http.ResponseWriter, r *http.Request) {
 
 	response, err := c.UseCase.Update(r.Context(), request)
 	if err != nil {
-		c.Log.WithError(err).Error("error updating contact")
+		c.Log.WithError(err).Error("error updating profil sodt")
 		http.Error(w, "Internal server", http.StatusInternalServerError)
 		return
 	}
@@ -118,7 +118,7 @@ func (c *ProfilSODTController) Delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := c.UseCase.Delete(r.Context(), request); err != nil {
-		c.Log.WithError(err).Error("error deleting profil visi misi")
+		c.Log.WithError(err).Error("error deleting profil sodt")
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}

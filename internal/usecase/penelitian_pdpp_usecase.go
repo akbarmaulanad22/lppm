@@ -76,8 +76,8 @@ func (c *PenelitianPDPPUseCase) FindAll(ctx context.Context) ([]model.Penelitian
 	}
 
 	responses := make([]model.PenelitianPDPPResponse, len(PenelitianPDPP))
-	for i, visiMisi := range PenelitianPDPP {
-		responses[i] = *converter.PenelitianPDPPToResponse(&visiMisi)
+	for i, penelitianPdpp := range PenelitianPDPP {
+		responses[i] = *converter.PenelitianPDPPToResponse(&penelitianPdpp)
 	}
 
 	return responses, nil

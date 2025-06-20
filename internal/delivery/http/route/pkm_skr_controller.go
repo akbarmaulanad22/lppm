@@ -35,7 +35,7 @@ func (c *PKMSKRController) Create(w http.ResponseWriter, r *http.Request) {
 
 	response, err := c.UseCase.Create(r.Context(), request)
 	if err != nil {
-		c.Log.WithError(err).Error("error creating contact")
+		c.Log.WithError(err).Error("error creating pkm skr")
 		http.Error(w, "Internal Server", http.StatusInternalServerError)
 		return
 	}
@@ -91,7 +91,7 @@ func (c *PKMSKRController) Update(w http.ResponseWriter, r *http.Request) {
 
 	response, err := c.UseCase.Update(r.Context(), request)
 	if err != nil {
-		c.Log.WithError(err).Error("error updating contact")
+		c.Log.WithError(err).Error("error updating pkm skr")
 		http.Error(w, "Internal server", http.StatusInternalServerError)
 		return
 	}

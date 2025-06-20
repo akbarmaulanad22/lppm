@@ -123,19 +123,19 @@ func (c *PenelitianRDRPUseCase) Delete(ctx context.Context, request *model.Delet
 		return err
 	}
 
-	contact := new(entity.PenelitianRDRP)
-	if err := c.PenelitianRDRPRepository.FindById(tx, contact, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting contact")
+	penelitianRDRP := new(entity.PenelitianRDRP)
+	if err := c.PenelitianRDRPRepository.FindById(tx, penelitianRDRP, request.ID); err != nil {
+		c.Log.WithError(err).Error("error getting penelitianRDRP")
 		return err
 	}
 
-	if err := c.PenelitianRDRPRepository.Delete(tx, contact); err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+	if err := c.PenelitianRDRPRepository.Delete(tx, penelitianRDRP); err != nil {
+		c.Log.WithError(err).Error("error deleting penelitianRDRP")
 		return err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+		c.Log.WithError(err).Error("error deleting penelitianRDRP")
 		return err
 	}
 

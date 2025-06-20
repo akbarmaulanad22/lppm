@@ -76,8 +76,8 @@ func (c *PKMLPUseCase) FindAll(ctx context.Context) ([]model.PKMLPResponse, erro
 	}
 
 	responses := make([]model.PKMLPResponse, len(PKMLP))
-	for i, visiMisi := range PKMLP {
-		responses[i] = *converter.PKMLPToResponse(&visiMisi)
+	for i, pkmLp := range PKMLP {
+		responses[i] = *converter.PKMLPToResponse(&pkmLp)
 	}
 
 	return responses, nil
@@ -123,19 +123,19 @@ func (c *PKMLPUseCase) Delete(ctx context.Context, request *model.DeletePKMLPReq
 		return err
 	}
 
-	contact := new(entity.PKMLP)
-	if err := c.PKMLPRepository.FindById(tx, contact, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting contact")
+	pkmLP := new(entity.PKMLP)
+	if err := c.PKMLPRepository.FindById(tx, pkmLP, request.ID); err != nil {
+		c.Log.WithError(err).Error("error getting pkmLP")
 		return err
 	}
 
-	if err := c.PKMLPRepository.Delete(tx, contact); err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+	if err := c.PKMLPRepository.Delete(tx, pkmLP); err != nil {
+		c.Log.WithError(err).Error("error deleting pkmLP")
 		return err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+		c.Log.WithError(err).Error("error deleting pkmLP")
 		return err
 	}
 

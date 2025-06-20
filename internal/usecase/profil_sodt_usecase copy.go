@@ -48,7 +48,7 @@ func (c *ProfilSODTUseCase) Create(ctx context.Context, request *model.CreatePro
 	}
 
 	if err := c.ProfilSODTRepository.Create(tx, profilSODT); err != nil {
-		c.Log.WithError(err).Error("failed to create profil Visi Misi")
+		c.Log.WithError(err).Error("failed to create profil sodt")
 		return nil, err
 	}
 
@@ -66,12 +66,12 @@ func (c *ProfilSODTUseCase) FindAll(ctx context.Context) ([]model.ProfilSODTResp
 
 	profilSODT, err := c.ProfilSODTRepository.FindAll(tx)
 	if err != nil {
-		c.Log.WithError(err).Error("error getting profil Visi Misi")
+		c.Log.WithError(err).Error("error getting profil sodt")
 		return nil, err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error getting profil Visi Misi")
+		c.Log.WithError(err).Error("error getting profil sodt")
 		return nil, err
 	}
 
@@ -89,7 +89,7 @@ func (c *ProfilSODTUseCase) Update(ctx context.Context, request *model.UpdatePro
 
 	profilSODT := new(entity.ProfilSODT)
 	if err := c.ProfilSODTRepository.FindById(tx, profilSODT, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting profil Visi Misi")
+		c.Log.WithError(err).Error("error getting profil sodt")
 		return nil, err
 	}
 
@@ -102,12 +102,12 @@ func (c *ProfilSODTUseCase) Update(ctx context.Context, request *model.UpdatePro
 	profilSODT.Content = request.Content
 
 	if err := c.ProfilSODTRepository.Update(tx, profilSODT); err != nil {
-		c.Log.WithError(err).Error("error updating profil Visi Misi")
+		c.Log.WithError(err).Error("error updating profil sodt")
 		return nil, err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error updating profil Visi Misi")
+		c.Log.WithError(err).Error("error updating profil sodt")
 		return nil, err
 	}
 
@@ -123,19 +123,19 @@ func (c *ProfilSODTUseCase) Delete(ctx context.Context, request *model.DeletePro
 		return err
 	}
 
-	contact := new(entity.ProfilSODT)
-	if err := c.ProfilSODTRepository.FindById(tx, contact, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting contact")
+	profilSODT := new(entity.ProfilSODT)
+	if err := c.ProfilSODTRepository.FindById(tx, profilSODT, request.ID); err != nil {
+		c.Log.WithError(err).Error("error getting profilSODT")
 		return err
 	}
 
-	if err := c.ProfilSODTRepository.Delete(tx, contact); err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+	if err := c.ProfilSODTRepository.Delete(tx, profilSODT); err != nil {
+		c.Log.WithError(err).Error("error deleting profilSODT")
 		return err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+		c.Log.WithError(err).Error("error deleting profilSODT")
 		return err
 	}
 

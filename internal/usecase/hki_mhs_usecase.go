@@ -76,8 +76,8 @@ func (c *HKIMHSUseCase) FindAll(ctx context.Context) ([]model.HKIMHSResponse, er
 	}
 
 	responses := make([]model.HKIMHSResponse, len(HKIMHS))
-	for i, visiMisi := range HKIMHS {
-		responses[i] = *converter.HKIMHSToResponse(&visiMisi)
+	for i, hkiMhs := range HKIMHS {
+		responses[i] = *converter.HKIMHSToResponse(&hkiMhs)
 	}
 
 	return responses, nil
@@ -123,19 +123,19 @@ func (c *HKIMHSUseCase) Delete(ctx context.Context, request *model.DeleteHKIMHSR
 		return err
 	}
 
-	contact := new(entity.HKIMHS)
-	if err := c.HKIMHSRepository.FindById(tx, contact, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting contact")
+	hkiMHS := new(entity.HKIMHS)
+	if err := c.HKIMHSRepository.FindById(tx, hkiMHS, request.ID); err != nil {
+		c.Log.WithError(err).Error("error getting hkiMHS")
 		return err
 	}
 
-	if err := c.HKIMHSRepository.Delete(tx, contact); err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+	if err := c.HKIMHSRepository.Delete(tx, hkiMHS); err != nil {
+		c.Log.WithError(err).Error("error deleting hkiMHS")
 		return err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+		c.Log.WithError(err).Error("error deleting hkiMHS")
 		return err
 	}
 

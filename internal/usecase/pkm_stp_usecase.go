@@ -76,8 +76,8 @@ func (c *PKMSTPUseCase) FindAll(ctx context.Context) ([]model.PKMSTPResponse, er
 	}
 
 	responses := make([]model.PKMSTPResponse, len(PKMSTP))
-	for i, visiMisi := range PKMSTP {
-		responses[i] = *converter.PKMSTPToResponse(&visiMisi)
+	for i, pkmStp := range PKMSTP {
+		responses[i] = *converter.PKMSTPToResponse(&pkmStp)
 	}
 
 	return responses, nil
@@ -123,19 +123,19 @@ func (c *PKMSTPUseCase) Delete(ctx context.Context, request *model.DeletePKMSTPR
 		return err
 	}
 
-	contact := new(entity.PKMSTP)
-	if err := c.PKMSTPRepository.FindById(tx, contact, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting contact")
+	pkmSTP := new(entity.PKMSTP)
+	if err := c.PKMSTPRepository.FindById(tx, pkmSTP, request.ID); err != nil {
+		c.Log.WithError(err).Error("error getting pkmSTP")
 		return err
 	}
 
-	if err := c.PKMSTPRepository.Delete(tx, contact); err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+	if err := c.PKMSTPRepository.Delete(tx, pkmSTP); err != nil {
+		c.Log.WithError(err).Error("error deleting pkmSTP")
 		return err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+		c.Log.WithError(err).Error("error deleting pkmSTP")
 		return err
 	}
 

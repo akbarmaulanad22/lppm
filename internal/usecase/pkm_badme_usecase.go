@@ -76,8 +76,8 @@ func (c *PKMBADMEUseCase) FindAll(ctx context.Context) ([]model.PKMBADMEResponse
 	}
 
 	responses := make([]model.PKMBADMEResponse, len(PKMBADME))
-	for i, visiMisi := range PKMBADME {
-		responses[i] = *converter.PKMBADMEToResponse(&visiMisi)
+	for i, pkmBadme := range PKMBADME {
+		responses[i] = *converter.PKMBADMEToResponse(&pkmBadme)
 	}
 
 	return responses, nil
@@ -123,19 +123,19 @@ func (c *PKMBADMEUseCase) Delete(ctx context.Context, request *model.DeletePKMBA
 		return err
 	}
 
-	contact := new(entity.PKMBADME)
-	if err := c.PKMBADMERepository.FindById(tx, contact, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting contact")
+	pkmBADME := new(entity.PKMBADME)
+	if err := c.PKMBADMERepository.FindById(tx, pkmBADME, request.ID); err != nil {
+		c.Log.WithError(err).Error("error getting pkmBADME")
 		return err
 	}
 
-	if err := c.PKMBADMERepository.Delete(tx, contact); err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+	if err := c.PKMBADMERepository.Delete(tx, pkmBADME); err != nil {
+		c.Log.WithError(err).Error("error deleting pkmBADME")
 		return err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+		c.Log.WithError(err).Error("error deleting pkmBADME")
 		return err
 	}
 

@@ -76,8 +76,8 @@ func (c *PKMSKRUseCase) FindAll(ctx context.Context) ([]model.PKMSKRResponse, er
 	}
 
 	responses := make([]model.PKMSKRResponse, len(PKMSKR))
-	for i, visiMisi := range PKMSKR {
-		responses[i] = *converter.PKMSKRToResponse(&visiMisi)
+	for i, pkmSkr := range PKMSKR {
+		responses[i] = *converter.PKMSKRToResponse(&pkmSkr)
 	}
 
 	return responses, nil
@@ -123,19 +123,19 @@ func (c *PKMSKRUseCase) Delete(ctx context.Context, request *model.DeletePKMSKRR
 		return err
 	}
 
-	contact := new(entity.PKMSKR)
-	if err := c.PKMSKRRepository.FindById(tx, contact, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting contact")
+	pkmSKR := new(entity.PKMSKR)
+	if err := c.PKMSKRRepository.FindById(tx, pkmSKR, request.ID); err != nil {
+		c.Log.WithError(err).Error("error getting pkmSKR")
 		return err
 	}
 
-	if err := c.PKMSKRRepository.Delete(tx, contact); err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+	if err := c.PKMSKRRepository.Delete(tx, pkmSKR); err != nil {
+		c.Log.WithError(err).Error("error deleting pkmSKR")
 		return err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+		c.Log.WithError(err).Error("error deleting pkmSKR")
 		return err
 	}
 

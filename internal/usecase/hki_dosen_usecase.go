@@ -76,8 +76,8 @@ func (c *HKIDosenUseCase) FindAll(ctx context.Context) ([]model.HKIDosenResponse
 	}
 
 	responses := make([]model.HKIDosenResponse, len(HKIDosen))
-	for i, visiMisi := range HKIDosen {
-		responses[i] = *converter.HKIDosenToResponse(&visiMisi)
+	for i, hkiDosen := range HKIDosen {
+		responses[i] = *converter.HKIDosenToResponse(&hkiDosen)
 	}
 
 	return responses, nil
@@ -123,19 +123,19 @@ func (c *HKIDosenUseCase) Delete(ctx context.Context, request *model.DeleteHKIDo
 		return err
 	}
 
-	contact := new(entity.HKIDosen)
-	if err := c.HKIDosenRepository.FindById(tx, contact, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting contact")
+	hkiDOSEN := new(entity.HKIDosen)
+	if err := c.HKIDosenRepository.FindById(tx, hkiDOSEN, request.ID); err != nil {
+		c.Log.WithError(err).Error("error getting hkiDOSEN")
 		return err
 	}
 
-	if err := c.HKIDosenRepository.Delete(tx, contact); err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+	if err := c.HKIDosenRepository.Delete(tx, hkiDOSEN); err != nil {
+		c.Log.WithError(err).Error("error deleting hkiDOSEN")
 		return err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+		c.Log.WithError(err).Error("error deleting hkiDOSEN")
 		return err
 	}
 

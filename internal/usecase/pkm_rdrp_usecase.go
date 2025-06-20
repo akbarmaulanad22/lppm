@@ -76,8 +76,8 @@ func (c *PKMRDRPUseCase) FindAll(ctx context.Context) ([]model.PKMRDRPResponse, 
 	}
 
 	responses := make([]model.PKMRDRPResponse, len(PKMRDRP))
-	for i, visiMisi := range PKMRDRP {
-		responses[i] = *converter.PKMRDRPToResponse(&visiMisi)
+	for i, pkmRdrp := range PKMRDRP {
+		responses[i] = *converter.PKMRDRPToResponse(&pkmRdrp)
 	}
 
 	return responses, nil
@@ -123,19 +123,19 @@ func (c *PKMRDRPUseCase) Delete(ctx context.Context, request *model.DeletePKMRDR
 		return err
 	}
 
-	contact := new(entity.PKMRDRP)
-	if err := c.PKMRDRPRepository.FindById(tx, contact, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting contact")
+	pkmPRDRP := new(entity.PKMRDRP)
+	if err := c.PKMRDRPRepository.FindById(tx, pkmPRDRP, request.ID); err != nil {
+		c.Log.WithError(err).Error("error getting pkmPRDRP")
 		return err
 	}
 
-	if err := c.PKMRDRPRepository.Delete(tx, contact); err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+	if err := c.PKMRDRPRepository.Delete(tx, pkmPRDRP); err != nil {
+		c.Log.WithError(err).Error("error deleting pkmPRDRP")
 		return err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+		c.Log.WithError(err).Error("error deleting pkmPRDRP")
 		return err
 	}
 

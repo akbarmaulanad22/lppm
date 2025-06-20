@@ -123,19 +123,19 @@ func (c *ProfilVisiMisiUseCase) Delete(ctx context.Context, request *model.Delet
 		return err
 	}
 
-	contact := new(entity.ProfilVisiMisi)
-	if err := c.ProfilVisiMisiRepository.FindById(tx, contact, request.ID); err != nil {
-		c.Log.WithError(err).Error("error getting contact")
+	profilVISIMISI := new(entity.ProfilVisiMisi)
+	if err := c.ProfilVisiMisiRepository.FindById(tx, profilVISIMISI, request.ID); err != nil {
+		c.Log.WithError(err).Error("error getting profilVISIMISI")
 		return err
 	}
 
-	if err := c.ProfilVisiMisiRepository.Delete(tx, contact); err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+	if err := c.ProfilVisiMisiRepository.Delete(tx, profilVISIMISI); err != nil {
+		c.Log.WithError(err).Error("error deleting profilVISIMISI")
 		return err
 	}
 
 	if err := tx.Commit().Error; err != nil {
-		c.Log.WithError(err).Error("error deleting contact")
+		c.Log.WithError(err).Error("error deleting profilVISIMISI")
 		return err
 	}
 
