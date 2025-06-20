@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS lppm_penelitian_skr;
