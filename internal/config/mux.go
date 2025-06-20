@@ -47,6 +47,13 @@ func NewMux(config *MuxConfig) {
 	penelitianBadmeRepository := repository.NewPenelitianBADMERepository(config.Log)
 	penelitianLpRepository := repository.NewPenelitianLPRepository(config.Log)
 
+	jurnalTeknoisRepository := repository.NewJurnalTeknoisRepository(config.Log)
+	jurnalTAJBRepository := repository.NewJurnalTAJBRepository(config.Log)
+	jurnalTMJBRepository := repository.NewJurnalTMJBRepository(config.Log)
+	jurnalJKRepository := repository.NewJurnalJKRepository(config.Log)
+	jurnalJSRepository := repository.NewJurnalJSRepository(config.Log)
+	jurnalKIATRepository := repository.NewJurnalKIATRepository(config.Log)
+
 	// setup use cases
 	profilVisiMisiUseCase := usecase.NewProfilVisiMisiUseCase(config.DB, config.Log, config.Validate, profilVisiMisiRepository)
 	profilSODTUseCase := usecase.NewProfilSODTUseCase(config.DB, config.Log, config.Validate, profilSODTRepository)
@@ -71,6 +78,13 @@ func NewMux(config *MuxConfig) {
 	penelitianStpUseCase := usecase.NewPenelitianSTPUseCase(config.DB, config.Log, config.Validate, penelitianStpRepository)
 	penelitianBadmeUseCase := usecase.NewPenelitianBADMEUseCase(config.DB, config.Log, config.Validate, penelitianBadmeRepository)
 	penelitianLpUseCase := usecase.NewPenelitianLPUseCase(config.DB, config.Log, config.Validate, penelitianLpRepository)
+
+	jurnalTeknoisUseCase := usecase.NewJurnalTeknoisUseCase(config.DB, config.Log, config.Validate, jurnalTeknoisRepository)
+	jurnalTAJBUseCase := usecase.NewJurnalTAJBUseCase(config.DB, config.Log, config.Validate, jurnalTAJBRepository)
+	jurnalTMJBUseCase := usecase.NewJurnalTMJBUseCase(config.DB, config.Log, config.Validate, jurnalTMJBRepository)
+	jurnalJKUseCase := usecase.NewJurnalJKUseCase(config.DB, config.Log, config.Validate, jurnalJKRepository)
+	jurnalJSUseCase := usecase.NewJurnalJSUseCase(config.DB, config.Log, config.Validate, jurnalJSRepository)
+	jurnalKIATUseCase := usecase.NewJurnalKIATUseCase(config.DB, config.Log, config.Validate, jurnalKIATRepository)
 
 	// setup controller
 	profilVisiMisiController := route.NewProfilVisiMisiController(profilVisiMisiUseCase, config.Log)
@@ -97,6 +111,13 @@ func NewMux(config *MuxConfig) {
 	penelitianBADMEController := route.NewPenelitianBADMEController(penelitianBadmeUseCase, config.Log)
 	penelitianLPController := route.NewPenelitianLPController(penelitianLpUseCase, config.Log)
 
+	jurnalTeknoisController := route.NewJurnalTeknoisController(jurnalTeknoisUseCase, config.Log)
+	jurnalTAJBController := route.NewJurnalTAJBController(jurnalTAJBUseCase, config.Log)
+	jurnalTMJBController := route.NewJurnalTMJBController(jurnalTMJBUseCase, config.Log)
+	jurnalJKController := route.NewJurnalJKController(jurnalJKUseCase, config.Log)
+	jurnalJSController := route.NewJurnalJSController(jurnalJSUseCase, config.Log)
+	jurnalKIATController := route.NewJurnalKIATController(jurnalKIATUseCase, config.Log)
+
 	routeConfig := route.RouteConfig{
 		Router:                    config.Router,
 		ProfilVisiMisiController:  profilVisiMisiController,
@@ -119,6 +140,12 @@ func NewMux(config *MuxConfig) {
 		PenelitianSTPController:   penelitianSTPController,
 		PenelitianBADMEController: penelitianBADMEController,
 		PenelitianLPController:    penelitianLPController,
+		JurnalTeknoisController:   jurnalTeknoisController,
+		JurnalTAJBController:      jurnalTAJBController,
+		JurnalTMJBController:      jurnalTMJBController,
+		JurnalJKController:        jurnalJKController,
+		JurnalJSController:        jurnalJSController,
+		JurnalKIATController:      jurnalKIATController,
 	}
 	routeConfig.Setup()
 

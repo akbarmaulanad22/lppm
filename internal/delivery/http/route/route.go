@@ -29,6 +29,12 @@ type RouteConfig struct {
 	PenelitianSTPController   *PenelitianSTPController
 	PenelitianBADMEController *PenelitianBADMEController
 	PenelitianLPController    *PenelitianLPController
+	JurnalTeknoisController   *JurnalTeknoisController
+	JurnalTAJBController      *JurnalTAJBController
+	JurnalTMJBController      *JurnalTMJBController
+	JurnalJKController        *JurnalJKController
+	JurnalJSController        *JurnalJSController
+	JurnalKIATController      *JurnalKIATController
 }
 
 func (route *RouteConfig) Setup() {
@@ -141,6 +147,36 @@ func (route *RouteConfig) SetupGuestRoute() {
 	penelitianRouter.HandleFunc("/lp/{id}", route.PenelitianLPController.Update).Methods("PUT")
 	penelitianRouter.HandleFunc("/lp/{id}", route.PenelitianLPController.Delete).Methods("DELETE")
 
+	jurnalRouter := route.Router.PathPrefix("/jurnal").Subrouter()
+	jurnalRouter.HandleFunc("/teknois", route.JurnalTeknoisController.Create).Methods("POST")
+	jurnalRouter.HandleFunc("/teknois", route.JurnalTeknoisController.List).Methods("GET")
+	jurnalRouter.HandleFunc("/teknois/{id}", route.JurnalTeknoisController.Update).Methods("PUT")
+	jurnalRouter.HandleFunc("/teknois/{id}", route.JurnalTeknoisController.Delete).Methods("DELETE")
+
+	jurnalRouter.HandleFunc("/tajb", route.JurnalTAJBController.Create).Methods("POST")
+	jurnalRouter.HandleFunc("/tajb", route.JurnalTAJBController.List).Methods("GET")
+	jurnalRouter.HandleFunc("/tajb/{id}", route.JurnalTAJBController.Update).Methods("PUT")
+	jurnalRouter.HandleFunc("/tajb/{id}", route.JurnalTAJBController.Delete).Methods("DELETE")
+
+	jurnalRouter.HandleFunc("/tmjb", route.JurnalTMJBController.Create).Methods("POST")
+	jurnalRouter.HandleFunc("/tmjb", route.JurnalTMJBController.List).Methods("GET")
+	jurnalRouter.HandleFunc("/tmjb/{id}", route.JurnalTMJBController.Update).Methods("PUT")
+	jurnalRouter.HandleFunc("/tmjb/{id}", route.JurnalTMJBController.Delete).Methods("DELETE")
+
+	jurnalRouter.HandleFunc("/jk", route.JurnalJKController.Create).Methods("POST")
+	jurnalRouter.HandleFunc("/jk", route.JurnalJKController.List).Methods("GET")
+	jurnalRouter.HandleFunc("/jk/{id}", route.JurnalJKController.Update).Methods("PUT")
+	jurnalRouter.HandleFunc("/jk/{id}", route.JurnalJKController.Delete).Methods("DELETE")
+
+	jurnalRouter.HandleFunc("/js", route.JurnalJSController.Create).Methods("POST")
+	jurnalRouter.HandleFunc("/js", route.JurnalJSController.List).Methods("GET")
+	jurnalRouter.HandleFunc("/js/{id}", route.JurnalJSController.Update).Methods("PUT")
+	jurnalRouter.HandleFunc("/js/{id}", route.JurnalJSController.Delete).Methods("DELETE")
+
+	jurnalRouter.HandleFunc("/kiat", route.JurnalKIATController.Create).Methods("POST")
+	jurnalRouter.HandleFunc("/kiat", route.JurnalKIATController.List).Methods("GET")
+	jurnalRouter.HandleFunc("/kiat/{id}", route.JurnalKIATController.Update).Methods("PUT")
+	jurnalRouter.HandleFunc("/kiat/{id}", route.JurnalKIATController.Delete).Methods("DELETE")
 }
 
 func (route *RouteConfig) SetupAuthRoute() {
