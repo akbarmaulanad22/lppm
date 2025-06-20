@@ -18,6 +18,7 @@ type RouteConfig struct {
 	PKMHPPController        *PKMHPPController
 	PKMSTPController        *PKMSTPController
 	PKMBADMEController        *PKMBADMEController
+	PKMLPController        *PKMLPController
 	HKIMHSController         *HKIMHSController
 	HKIDosenController       *HKIDosenController
 	PenelitianRDRPController *PenelitianRDRPController
@@ -76,6 +77,11 @@ func (route *RouteConfig) SetupGuestRoute() {
 	pkmRouter.HandleFunc("/badme", route.PKMBADMEController.List).Methods("GET")
 	pkmRouter.HandleFunc("/badme/{id}", route.PKMBADMEController.Update).Methods("PUT")
 	pkmRouter.HandleFunc("/badme/{id}", route.PKMBADMEController.Delete).Methods("DELETE")
+
+	pkmRouter.HandleFunc("/lp", route.PKMLPController.Create).Methods("POST")
+	pkmRouter.HandleFunc("/lp", route.PKMLPController.List).Methods("GET")
+	pkmRouter.HandleFunc("/lp/{id}", route.PKMLPController.Update).Methods("PUT")
+	pkmRouter.HandleFunc("/lp/{id}", route.PKMLPController.Delete).Methods("DELETE")
 
 	hkiRouter := route.Router.PathPrefix("/hki").Subrouter()
 	hkiRouter.HandleFunc("/mhs", route.HKIMHSController.Create).Methods("POST")
