@@ -78,6 +78,11 @@ func (route *RouteConfig) SetupGuestRoute() {
 	pkmRouter.HandleFunc("/badme/{id}", route.PKMBADMEController.Update).Methods("PUT")
 	pkmRouter.HandleFunc("/badme/{id}", route.PKMBADMEController.Delete).Methods("DELETE")
 
+	pkmRouter.HandleFunc("/lp", route.PKMLPController.Create).Methods("POST")
+	pkmRouter.HandleFunc("/lp", route.PKMLPController.List).Methods("GET")
+	pkmRouter.HandleFunc("/lp/{id}", route.PKMLPController.Update).Methods("PUT")
+	pkmRouter.HandleFunc("/lp/{id}", route.PKMLPController.Delete).Methods("DELETE")
+
 	hkiRouter := route.Router.PathPrefix("/hki").Subrouter()
 	hkiRouter.HandleFunc("/mhs", route.HKIMHSController.Create).Methods("POST")
 	hkiRouter.HandleFunc("/mhs", route.HKIMHSController.List).Methods("GET")
